@@ -1,0 +1,289 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  PHARMACIST
+  MEDICAL_ASSISTANT
+  LICENSED_VOCATIONAL_NURSE
+  TECHNICIAN
+  REGISTERED_NURSE
+  PROVIDER
+  AUDITOR
+  NURSE
+}
+
+enum TransactionType {
+  RECEIVE
+  DISPENSE
+  TRANSFER_OUT
+  TRANSFER_IN
+  ADJUST
+  WASTE
+  DISPOSE
+  CYCLE_COUNT
+}
+
+enum InventoryUnit {
+  EACH
+  ML
+  TABLET
+  CAPSULE
+  VIAL
+  AMPULE
+  TUBE
+  BOTTLE
+  PATCH
+  SYRINGE
+  KIT
+  GRAM
+}
+
+model User {
+  id             String   @id @default(cuid())
+  name           String
+  email          String   @unique
+  passwordHash   String?
+  role           UserRole
+  homeLocationId String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  homeLocation             Location?              @relation("UserHomeLocation", fields: [homeLocationId], references: [id], onDelete: SetNull)
+  inventoryTransactions    InventoryTransaction[] @relation("TransactionActor")
+  auditLogs                AuditLog[]             @relation("AuditActor")
+  completedCycleCountTasks CycleCountTask[]       @relation("CycleCountTaskCompletedBy")
+  auditEvents              AuditEvent[]           @relation("AuditEventActor")
+
+  @@index([homeLocationId])
+}
+
+model Location {
+  id        String   @id @default(cuid())
+  name      String
+  code      String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  inventoryItems        InventoryItem[]
+  inventoryTransactions InventoryTransaction[]
+  cycleCountTasks       CycleCountTask[]
+  reconciliationReports ReconciliationReport[]
+  auditEvents           AuditEvent[]
+  homeUsers             User[]                 @relation("UserHomeLocation")
+}
+
+model MedicationMaster {
+  id                   String        @id @default(cuid())
+  name                 String
+  genericName          String?
+  strength             String?
+  dosageForm           String?
+  manufacturer         String?
+  ndc                  String?
+  barcode              String        @unique
+  deaSchedule          String?
+  inventoryUnit        InventoryUnit @default(EACH)
+  isControlled         Boolean       @default(false)
+  isActive             Boolean       @default(true)
+  isMultiDose          Boolean       @default(false)
+  openedUsePolicy      String?
+  openedUseDays        Int?
+  requiresOpenedDate   Boolean       @default(false)
+  requiresWitnessWaste Boolean       @default(false)
+  notes                String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  inventoryItems        InventoryItem[]
+  inventoryTransactions InventoryTransaction[]
+  cycleCountTasks       CycleCountTask[]
+  auditEvents           AuditEvent[]
+}
+
+model InventoryItem {
+  id               String    @id @default(cuid())
+  locationId       String
+  medicationId     String
+  lotNumber        String?
+  expirationDate   DateTime?
+  quantityOnHand   Decimal   @db.Decimal(12, 3)
+  openedQuantity   Decimal?  @db.Decimal(12, 3)
+  openedDate       DateTime?
+  discardAfterDate DateTime?
+  status           String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  location   Location         @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  medication MedicationMaster @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+
+  @@index([locationId, medicationId])
+}
+
+model InventoryTransaction {
+  id             String          @id @default(cuid())
+  type           TransactionType
+  locationId     String
+  medicationId   String
+  actorUserId    String
+  witnessUserId  String?
+  quantity       Decimal         @db.Decimal(12, 3)
+  inventoryUnit  InventoryUnit   @default(EACH)
+  lotNumber      String?
+  expirationDate DateTime?
+  barcode        String?
+  note           String?
+  referenceId    String?
+
+  previousHash String?
+  hash         String? @unique
+  chainVersion Int     @default(1)
+
+  occurredAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  location   Location         @relation(fields: [locationId], references: [id], onDelete: Restrict)
+  medication MedicationMaster @relation(fields: [medicationId], references: [id], onDelete: Restrict)
+  actor      User             @relation("TransactionActor", fields: [actorUserId], references: [id], onDelete: Restrict)
+
+  @@index([locationId, medicationId, occurredAt])
+  @@index([actorUserId, occurredAt])
+  @@index([occurredAt])
+  @@index([previousHash])
+}
+
+model CycleCountTask {
+  id                String    @id @default(cuid())
+  medicationId      String
+  locationId        String
+  scheduledFor      DateTime
+  status            String    @default("OPEN")
+  riskScore         Int
+  priority          String
+  reasonCodes       String
+  completedAt       DateTime?
+  completedByUserId String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  medication  MedicationMaster @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  location    Location         @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  completedBy User?            @relation("CycleCountTaskCompletedBy", fields: [completedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([scheduledFor])
+  @@index([status])
+  @@index([medicationId, locationId])
+}
+
+model ReconciliationReport {
+  id              String    @id @default(cuid())
+  locationId      String
+  startDate       DateTime
+  endDate         DateTime
+  reviewTiming    String
+  reviewerRole    String
+  reviewerName    String
+  search          String?
+  deaSchedules    String?
+  discrepancyOnly Boolean   @default(false)
+  finalized       Boolean   @default(false)
+  finalizedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  location    Location                  @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  rows        ReconciliationReportRow[]
+  auditEvents AuditEvent[]
+
+  @@index([locationId, startDate, endDate])
+  @@index([finalized, finalizedAt])
+}
+
+model ReconciliationReportRow {
+  id                    String   @id @default(cuid())
+  reportId              String
+  medicationId          String
+  medicationName        String
+  strength              String?
+  dosageForm            String?
+  deaSchedule           String?
+  locationId            String
+  locationName          String
+  beginningBalance      Decimal  @db.Decimal(12, 3)
+  receipts              Decimal  @db.Decimal(12, 3)
+  transfersIn           Decimal  @db.Decimal(12, 3)
+  dispensed             Decimal  @db.Decimal(12, 3)
+  waste                 Decimal  @db.Decimal(12, 3)
+  dispose               Decimal  @db.Decimal(12, 3)
+  transfersOut          Decimal  @db.Decimal(12, 3)
+  adjustments           Decimal  @db.Decimal(12, 3)
+  expectedEndingBalance Decimal  @db.Decimal(12, 3)
+  physicalCount         Decimal? @db.Decimal(12, 3)
+  variance              Decimal? @db.Decimal(12, 3)
+  notes                 String?
+  status                String
+  createdAt             DateTime @default(now())
+
+  report ReconciliationReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+  @@index([locationId, medicationId])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  actorUserId String
+  action      String
+  entityType  String
+  entityId    String?
+  detail      String?
+  createdAt   DateTime @default(now())
+
+  actor User @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: Restrict)
+
+  @@index([actorUserId, createdAt])
+  @@index([entityType, entityId])
+}
+
+model AuditEvent {
+  id                     String   @id @default(cuid())
+  occurredAt             DateTime @default(now())
+  category               String
+  action                 String
+  actorUserId            String?
+  actorName              String?
+  locationId             String?
+  locationName           String?
+  medicationId           String?
+  medicationName         String?
+  inventoryTransactionId String?
+  reconciliationReportId String?
+  entityType             String?
+  entityId               String?
+  details                String?
+  metadataJson           String?
+  createdAt              DateTime @default(now())
+
+  actor                User?                 @relation("AuditEventActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  location             Location?             @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  medication           MedicationMaster?     @relation(fields: [medicationId], references: [id], onDelete: SetNull)
+  reconciliationReport ReconciliationReport? @relation(fields: [reconciliationReportId], references: [id], onDelete: SetNull)
+
+  @@index([occurredAt])
+  @@index([category, occurredAt])
+  @@index([action, occurredAt])
+  @@index([actorUserId, occurredAt])
+  @@index([locationId, occurredAt])
+  @@index([medicationId, occurredAt])
+  @@index([reconciliationReportId])
+  @@index([entityType, entityId])
+}
