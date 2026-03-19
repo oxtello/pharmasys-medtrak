@@ -4,8 +4,24 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import { generateTempPassword, hashPassword } from "@/lib/password";
 
-function isAdminLike(role?: string | null) {
-  return role === "ADMIN" || role === "PHARMACIST";
+const VALID_ROLES = [
+  "ADMIN",
+  "PHARMACIST",
+  "MEDICAL_ASSISTANT",
+  "LICENSED_VOCATIONAL_NURSE",
+  "TECHNICIAN",
+  "REGISTERED_NURSE",
+  "PROVIDER",
+  "AUDITOR",
+  "NURSE",
+] as const;
+
+function isAdmin(role?: string | null) {
+  return role === "ADMIN";
+}
+
+function isValidRole(role: string): role is (typeof VALID_ROLES)[number] {
+  return VALID_ROLES.includes(role as (typeof VALID_ROLES)[number]);
 }
 
 export async function PATCH(
@@ -23,7 +39,7 @@ export async function PATCH(
       where: { email: session.user.email },
     });
 
-    if (!actor || !actor.isActive || !isAdminLike(actor.role)) {
+    if (!actor || !actor.isActive || !isAdmin(actor.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -38,12 +54,22 @@ export async function PATCH(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const updates: any = {};
+    const updates: {
+      name?: string;
+      email?: string;
+      role?: (typeof VALID_ROLES)[number];
+      isActive?: boolean;
+      homeLocationId?: string | null;
+      passwordHash?: string;
+    } = {};
 
     if (body.name !== undefined) {
       const name = String(body.name).trim();
       if (!name) {
-        return NextResponse.json({ error: "Name cannot be empty" }, { status: 400 });
+        return NextResponse.json(
+          { error: "Name cannot be empty" },
+          { status: 400 }
+        );
       }
       updates.name = name;
     }
@@ -51,7 +77,10 @@ export async function PATCH(
     if (body.email !== undefined) {
       const email = String(body.email).trim().toLowerCase();
       if (!email) {
-        return NextResponse.json({ error: "Email cannot be empty" }, { status: 400 });
+        return NextResponse.json(
+          { error: "Email cannot be empty" },
+          { status: 400 }
+        );
       }
 
       const emailOwner = await prisma.user.findUnique({
@@ -71,17 +100,7 @@ export async function PATCH(
     if (body.role !== undefined) {
       const role = String(body.role).trim().toUpperCase();
 
-      const validRoles = [
-        "ADMIN",
-        "PHARMACIST",
-        "MEDICAL_ASSISTANT",
-        "LICENSED_VOCATIONAL_NURSE",
-        "TECHNICIAN",
-        "REGISTERED_NURSE",
-        "PROVIDER",
-      ];
-
-      if (!validRoles.includes(role)) {
+      if (!isValidRole(role)) {
         return NextResponse.json({ error: "Invalid role" }, { status: 400 });
       }
 

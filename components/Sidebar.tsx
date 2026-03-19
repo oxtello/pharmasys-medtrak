@@ -3,15 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import {
   Home,
   Package2,
-  ArrowDownToLine,
-  ArrowUpFromLine,
-  RefreshCw,
-  SlidersHorizontal,
-  Trash2,
-  ShieldAlert,
   ClipboardList,
   BarChart3,
   Settings,
@@ -30,25 +25,23 @@ type NavGroup = {
   items: NavItem[];
 };
 
-const navGroups: NavGroup[] = [
-  {
-    title: "Overview",
-    items: [
-      { href: "/dashboard", label: "Dashboard", icon: Home },
-      { href: "/inventory", label: "Inventory", icon: Package2 },
-      { href: "/reports/transactions", label: "Transactions", icon: ClipboardList },
-      { href: "/reports", label: "Reports", icon: BarChart3 },
-    ],
-  },
+const overviewGroup: NavGroup = {
+  title: "Overview",
+  items: [
+    { href: "/dashboard", label: "Dashboard", icon: Home },
+    { href: "/inventory", label: "Inventory", icon: Package2 },
+    { href: "/reports/transactions", label: "Transactions", icon: ClipboardList },
+    { href: "/reports", label: "Reports", icon: BarChart3 },
+  ],
+};
 
-  {
-    title: "Administration",
-    items: [
-      { href: "/admin", label: "Admin", icon: Settings },
-      { href: "/admin/users", label: "Users", icon: Users },
-    ],
-  },
-];
+const administrationGroup: NavGroup = {
+  title: "Administration",
+  items: [
+    { href: "/admin", label: "Admin", icon: Settings },
+    { href: "/admin/users", label: "Users", icon: Users },
+  ],
+};
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard";
@@ -57,6 +50,14 @@ function isActivePath(pathname: string, href: string) {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  const role = String(session?.user?.role || "").toUpperCase();
+  const isAdmin = role === "ADMIN";
+
+  const navGroups: NavGroup[] = isAdmin
+    ? [overviewGroup, administrationGroup]
+    : [overviewGroup];
 
   return (
     <aside className="hidden w-[280px] shrink-0 border-r border-slate-200 bg-white xl:flex xl:flex-col">

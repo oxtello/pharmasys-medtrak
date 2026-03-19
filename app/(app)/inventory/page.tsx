@@ -220,26 +220,77 @@ export default function InventoryPage() {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Link href="/inventory/add-medication" className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">Add Medication</Link>
-          <Link href="/inventory/receive" className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Receive Stock</Link>
-          <Link href="/inventory/dispense" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">Dispense</Link>
-          <Link href="/inventory/adjust" className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-medium text-white hover:bg-amber-600">Adjust</Link>
-          <Link href="/inventory/waste" className="rounded-xl bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700">Waste</Link>
-          <Link href="/inventory/dispose" className="rounded-xl bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-800">Dispose</Link>
-          <Link href="/inventory/transfer" className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700">Transfer</Link>
-          <Link href="/inventory/cycle-count" className="rounded-xl bg-cyan-600 px-4 py-2 text-sm font-medium text-white hover:bg-cyan-700">Cycle Count</Link>
+          <Link
+            href="/inventory/new"
+            className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
+          >
+            Add Medication
+          </Link>
+
+          <Link
+            href="/inventory/receive"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          >
+            Receive Stock
+          </Link>
+
+          <Link
+            href="/inventory/dispense"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          >
+            Dispense
+          </Link>
+
+          <Link
+            href="/inventory/adjust"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          >
+            Adjust
+          </Link>
+
+          <Link
+            href="/inventory/waste"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+          >
+            Waste
+          </Link>
+
+          <Link
+            href="/inventory/dispose"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+          >
+            Dispose
+          </Link>
+
+          <Link
+            href="/inventory/transfer"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          >
+            Transfer
+          </Link>
+
+          <Link
+            href="/inventory/cycle-count"
+            className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          >
+            Cycle Count
+          </Link>
         </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Inventory lines</p>
-          <p className="mt-2 text-3xl font-semibold text-slate-900">{filteredInventory.length}</p>
+          <p className="mt-2 text-3xl font-semibold text-slate-900">
+            {filteredInventory.length}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm text-slate-500">Total units on hand</p>
-          <p className="mt-2 text-3xl font-semibold text-slate-900">{totalUnits}</p>
+          <p className="mt-2 text-3xl font-semibold text-slate-900">
+            {totalUnits}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -247,7 +298,8 @@ export default function InventoryPage() {
           <p className="mt-2 text-lg font-semibold text-slate-900">
             {selectedLocationId === "all"
               ? "All active locations"
-              : locations.find((loc) => loc.id === selectedLocationId)?.name ?? "Selected location"}
+              : locations.find((loc) => loc.id === selectedLocationId)?.name ??
+                "Selected location"}
           </p>
         </div>
       </div>
@@ -255,7 +307,9 @@ export default function InventoryPage() {
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Search</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Search
+            </label>
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -265,7 +319,9 @@ export default function InventoryPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">Location</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">
+              Location
+            </label>
             <select
               value={selectedLocationId}
               onChange={(e) => setSelectedLocationId(e.target.value)}
@@ -288,7 +344,9 @@ export default function InventoryPage() {
         ) : error ? (
           <div className="p-6 text-sm text-red-600">{error}</div>
         ) : filteredInventory.length === 0 ? (
-          <div className="p-6 text-sm text-slate-600">No inventory records found.</div>
+          <div className="p-6 text-sm text-slate-600">
+            No inventory records found.
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
@@ -308,20 +366,29 @@ export default function InventoryPage() {
                   const health = getInventoryHealth(row.status, row.quantity);
 
                   return (
-                    <tr key={`${row.medicationId}-${row.locationId}-${index}`} className="text-sm text-slate-700">
+                    <tr
+                      key={`${row.medicationId}-${row.locationId}-${index}`}
+                      className="text-sm text-slate-700"
+                    >
                       <td className="px-4 py-4">
                         <div className="font-medium text-slate-900">{row.name}</div>
                         <div className="text-xs text-slate-500">
-                          {[row.strength, row.dosageForm, row.manufacturer].filter(Boolean).join(" • ")}
+                          {[row.strength, row.dosageForm, row.manufacturer]
+                            .filter(Boolean)
+                            .join(" • ")}
                         </div>
                       </td>
                       <td className="px-4 py-4">{row.barcode ?? "-"}</td>
                       <td className="px-4 py-4">{row.ndc ?? "-"}</td>
                       <td className="px-4 py-4">{row.locationName}</td>
                       <td className="px-4 py-4">{row.inventoryUnit ?? "-"}</td>
-                      <td className="px-4 py-4 font-semibold text-slate-900">{row.quantity}</td>
+                      <td className="px-4 py-4 font-semibold text-slate-900">
+                        {row.quantity}
+                      </td>
                       <td className="px-4 py-4">
-                        <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${health.className}`}>
+                        <span
+                          className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${health.className}`}
+                        >
                           {health.label}
                         </span>
                       </td>

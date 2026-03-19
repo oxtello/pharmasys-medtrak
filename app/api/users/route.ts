@@ -16,8 +16,8 @@ const VALID_ROLES = [
   "NURSE",
 ] as const;
 
-function isAdminLike(role?: string | null) {
-  return role === "ADMIN" || role === "PHARMACIST";
+function isAdmin(role?: string | null) {
+  return role === "ADMIN";
 }
 
 function isValidRole(role: string): role is (typeof VALID_ROLES)[number] {
@@ -36,7 +36,7 @@ export async function GET() {
       where: { email: session.user.email },
     });
 
-    if (!actor || !actor.isActive || !isAdminLike(actor.role)) {
+    if (!actor || !actor.isActive || !isAdmin(actor.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
       where: { email: session.user.email },
     });
 
-    if (!actor || !actor.isActive || !isAdminLike(actor.role)) {
+    if (!actor || !actor.isActive || !isAdmin(actor.role)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
