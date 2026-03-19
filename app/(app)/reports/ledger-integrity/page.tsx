@@ -2,51 +2,29 @@
 
 import { useEffect, useState } from "react";
 
-type LedgerIssue = {
-  transactionId: string;
-  issue: string;
-  expected?: string | null;
-  actual?: string | null;
-};
-
 type LedgerVerifyResponse = {
-  success?: boolean;
-  verified?: boolean;
-  transactionCount?: number;
-  issueCount?: number;
-  chainHeadHash?: string | null;
-  lastTransactionId?: string | null;
-  lastOccurredAt?: string | null;
-  verifiedAt?: string | null;
-  verifiedBy?: {
-    id: string;
-    email: string;
-    role: string;
-  } | null;
-  issues?: LedgerIssue[];
+  verified: boolean;
+  checkedRecords: number;
+  brokenAtTransactionId?: string | null;
+  firstBrokenIndex?: number | null;
+  expectedPreviousHash?: string | null;
+  actualPreviousHash?: string | null;
+  expectedHash?: string | null;
+  actualHash?: string | null;
   error?: string;
 };
-
-function formatDateTime(value?: string | null) {
-  if (!value) return "—";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleString();
-}
 
 export default function LedgerIntegrityReportPage() {
   const [data, setData] = useState<LedgerVerifyResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [actionMessage, setActionMessage] = useState("");
-  const [backfilling, setBackfilling] = useState(false);
 
   async function loadReport() {
     setLoading(true);
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/inventory/ledger/verify", {
+      const res = await fetch("/api/reports/ledger-integrity", {
         cache: "no-store",
       });
 
@@ -68,42 +46,11 @@ export default function LedgerIntegrityReportPage() {
     }
   }
 
-  async function runBackfill() {
-    setBackfilling(true);
-    setActionMessage("");
-    setErrorMessage("");
-
-    try {
-      const res = await fetch("/api/inventory/ledger/backfill", {
-        method: "POST",
-      });
-
-      const body = await res.json();
-
-      if (!res.ok) {
-        setErrorMessage(body.error || "Failed to backfill ledger");
-        return;
-      }
-
-      setActionMessage(
-        `Ledger backfill complete. Updated ${body.updatedCount ?? 0} of ${body.transactionCount ?? 0} transactions.`
-      );
-
-      await loadReport();
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Failed to backfill ledger");
-    } finally {
-      setBackfilling(false);
-    }
-  }
-
   useEffect(() => {
     loadReport();
   }, []);
 
   const verified = !!data?.verified;
-  const issues = data?.issues ?? [];
 
   return (
     <div className="space-y-8">
@@ -118,35 +65,19 @@ export default function LedgerIntegrityReportPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={loadReport}
-              className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white"
-            >
-              Refresh Verification
-            </button>
-            <button
-              type="button"
-              onClick={runBackfill}
-              disabled={backfilling}
-              className="rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {backfilling ? "Backfilling..." : "Backfill Ledger"}
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={loadReport}
+            className="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white"
+          >
+            Refresh Verification
+          </button>
         </div>
       </section>
 
       {errorMessage ? (
         <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
           {errorMessage}
-        </div>
-      ) : null}
-
-      {actionMessage ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
-          {actionMessage}
         </div>
       ) : null}
 
@@ -165,25 +96,21 @@ export default function LedgerIntegrityReportPage() {
         <div className="rounded-2xl border bg-white p-6 shadow-sm">
           <div className="text-sm text-slate-500">Transactions Checked</div>
           <div className="mt-2 text-2xl font-semibold text-slate-900">
-            {loading ? "-" : data?.transactionCount ?? 0}
+            {loading ? "-" : data?.checkedRecords ?? 0}
           </div>
         </div>
 
         <div className="rounded-2xl border bg-white p-6 shadow-sm">
-          <div className="text-sm text-slate-500">Issues Found</div>
+          <div className="text-sm text-slate-500">Broken Transaction</div>
+          <div className="mt-2 break-all text-sm font-medium text-slate-900">
+            {loading ? "—" : data?.brokenAtTransactionId || "None"}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border bg-white p-6 shadow-sm">
+          <div className="text-sm text-slate-500">Broken Index</div>
           <div className="mt-2 text-2xl font-semibold text-slate-900">
-            {loading ? "-" : data?.issueCount ?? 0}
-          </div>
-        </div>
-
-        <div className="rounded-2xl border bg-white p-6 shadow-sm">
-          <div className="text-sm text-slate-500">Verified By</div>
-          <div className="mt-2 text-sm font-medium text-slate-900">
-            {loading
-              ? "Loading..."
-              : data?.verifiedBy
-              ? `${data.verifiedBy.email} (${data.verifiedBy.role})`
-              : "Current authorized user"}
+            {loading ? "-" : data?.firstBrokenIndex ?? "—"}
           </div>
         </div>
       </section>
@@ -209,104 +136,47 @@ export default function LedgerIntegrityReportPage() {
           </div>
         ) : (
           <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-            One or more ledger integrity issues were detected. Review the details
-            below.
+            A ledger integrity issue was detected. Review the mismatch details below.
           </div>
         )}
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
           <div className="rounded-xl border bg-slate-50 p-4">
             <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Verified At
+              Expected Previous Hash
             </div>
-            <div className="mt-2 text-sm font-medium text-slate-900">
-              {loading ? "—" : formatDateTime(data?.verifiedAt)}
+            <div className="mt-2 break-all font-mono text-xs text-slate-900">
+              {loading ? "—" : data?.expectedPreviousHash || "—"}
             </div>
           </div>
 
           <div className="rounded-xl border bg-slate-50 p-4">
             <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Last Transaction ID
+              Actual Previous Hash
             </div>
-            <div className="mt-2 break-all text-sm font-medium text-slate-900">
-              {loading ? "—" : data?.lastTransactionId || "—"}
-            </div>
-          </div>
-
-          <div className="rounded-xl border bg-slate-50 p-4">
-            <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Last Occurred At
-            </div>
-            <div className="mt-2 text-sm font-medium text-slate-900">
-              {loading ? "—" : formatDateTime(data?.lastOccurredAt)}
+            <div className="mt-2 break-all font-mono text-xs text-slate-900">
+              {loading ? "—" : data?.actualPreviousHash || "—"}
             </div>
           </div>
 
           <div className="rounded-xl border bg-slate-50 p-4">
             <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-              Chain Head Hash
+              Expected Hash
             </div>
-            <div className="mt-2 break-all text-xs font-medium text-slate-900">
-              {loading ? "—" : data?.chainHeadHash || "—"}
+            <div className="mt-2 break-all font-mono text-xs text-slate-900">
+              {loading ? "—" : data?.expectedHash || "—"}
+            </div>
+          </div>
+
+          <div className="rounded-xl border bg-slate-50 p-4">
+            <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              Actual Hash
+            </div>
+            <div className="mt-2 break-all font-mono text-xs text-slate-900">
+              {loading ? "—" : data?.actualHash || "—"}
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="rounded-2xl border bg-white p-6 shadow-sm">
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-slate-900">Issue Details</h2>
-          <p className="mt-1 text-sm text-slate-500">
-            Displays any transaction-level hash or chain-link mismatches.
-          </p>
-        </div>
-
-        {loading ? (
-          <div className="text-sm text-slate-500">Loading issues...</div>
-        ) : issues.length === 0 ? (
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-            No issues detected.
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-0 text-sm">
-              <thead>
-                <tr>
-                  <th className="border-b px-4 py-3 text-left font-medium text-slate-600">
-                    Transaction ID
-                  </th>
-                  <th className="border-b px-4 py-3 text-left font-medium text-slate-600">
-                    Issue
-                  </th>
-                  <th className="border-b px-4 py-3 text-left font-medium text-slate-600">
-                    Expected
-                  </th>
-                  <th className="border-b px-4 py-3 text-left font-medium text-slate-600">
-                    Actual
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {issues.map((issue) => (
-                  <tr key={`${issue.transactionId}-${issue.issue}`} className="border-t">
-                    <td className="px-4 py-3 align-top font-mono text-xs text-slate-700">
-                      {issue.transactionId}
-                    </td>
-                    <td className="px-4 py-3 align-top text-slate-900">
-                      {issue.issue}
-                    </td>
-                    <td className="px-4 py-3 align-top font-mono text-xs text-slate-600">
-                      {issue.expected || "—"}
-                    </td>
-                    <td className="px-4 py-3 align-top font-mono text-xs text-slate-600">
-                      {issue.actual || "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
       </section>
     </div>
   );

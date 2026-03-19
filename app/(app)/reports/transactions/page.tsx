@@ -36,8 +36,7 @@ const TYPE_OPTIONS = [
   "TRANSFER_IN",
   "WASTE",
   "DISPOSE",
-  "ADJUST_ADD",
-  "ADJUST_SUBTRACT",
+  "ADJUST",
   "CYCLE_COUNT",
 ];
 
@@ -66,8 +65,7 @@ function badgeClasses(type: string) {
       return "bg-amber-100 text-amber-700 border border-amber-200";
     case "DISPOSE":
       return "bg-rose-100 text-rose-700 border border-rose-200";
-    case "ADJUST_ADD":
-    case "ADJUST_SUBTRACT":
+    case "ADJUST":
       return "bg-orange-100 text-orange-700 border border-orange-200";
     case "CYCLE_COUNT":
       return "bg-slate-100 text-slate-700 border border-slate-200";
