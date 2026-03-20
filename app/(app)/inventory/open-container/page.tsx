@@ -37,13 +37,12 @@ function toNumber(value: string) {
 }
 
 export default function OpenContainerPage() {
-  const [barcode, setBarcode] = useState("");
-  const [location, setLocation] = useState(
-    CURRENT_USER.homeLocation || "Main Campus"
-  );
+const [barcode, setBarcode] = useState("");
+const [location, setLocation] = useState("Main Campus");
   const [openedDate, setOpenedDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
+
   const [initialQuantity, setInitialQuantity] = useState("");
   const [unit, setUnit] = useState("mL");
   const [lotNumber, setLotNumber] = useState("");
@@ -97,7 +96,7 @@ export default function OpenContainerPage() {
         unit,
         lotNumber,
         expirationDate,
-        openedBy: CURRENT_USER.name,
+	openedBy: "Current User",
         notes,
       });
 

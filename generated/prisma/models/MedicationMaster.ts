@@ -340,6 +340,7 @@ export type MedicationMasterWhereInput = {
   inventoryTransactions?: Prisma.InventoryTransactionListRelationFilter
   cycleCountTasks?: Prisma.CycleCountTaskListRelationFilter
   auditEvents?: Prisma.AuditEventListRelationFilter
+  openedContainers?: Prisma.OpenedContainerListRelationFilter
 }
 
 export type MedicationMasterOrderByWithRelationInput = {
@@ -367,6 +368,7 @@ export type MedicationMasterOrderByWithRelationInput = {
   inventoryTransactions?: Prisma.InventoryTransactionOrderByRelationAggregateInput
   cycleCountTasks?: Prisma.CycleCountTaskOrderByRelationAggregateInput
   auditEvents?: Prisma.AuditEventOrderByRelationAggregateInput
+  openedContainers?: Prisma.OpenedContainerOrderByRelationAggregateInput
 }
 
 export type MedicationMasterWhereUniqueInput = Prisma.AtLeast<{
@@ -397,6 +399,7 @@ export type MedicationMasterWhereUniqueInput = Prisma.AtLeast<{
   inventoryTransactions?: Prisma.InventoryTransactionListRelationFilter
   cycleCountTasks?: Prisma.CycleCountTaskListRelationFilter
   auditEvents?: Prisma.AuditEventListRelationFilter
+  openedContainers?: Prisma.OpenedContainerListRelationFilter
 }, "id" | "barcode">
 
 export type MedicationMasterOrderByWithAggregationInput = {
@@ -478,6 +481,7 @@ export type MedicationMasterCreateInput = {
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterUncheckedCreateInput = {
@@ -505,6 +509,7 @@ export type MedicationMasterUncheckedCreateInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterUpdateInput = {
@@ -532,6 +537,7 @@ export type MedicationMasterUpdateInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterUncheckedUpdateInput = {
@@ -559,6 +565,7 @@ export type MedicationMasterUncheckedUpdateInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterCreateManyInput = {
@@ -757,6 +764,20 @@ export type MedicationMasterUpdateOneRequiredWithoutInventoryTransactionsNestedI
   update?: Prisma.XOR<Prisma.XOR<Prisma.MedicationMasterUpdateToOneWithWhereWithoutInventoryTransactionsInput, Prisma.MedicationMasterUpdateWithoutInventoryTransactionsInput>, Prisma.MedicationMasterUncheckedUpdateWithoutInventoryTransactionsInput>
 }
 
+export type MedicationMasterCreateNestedOneWithoutOpenedContainersInput = {
+  create?: Prisma.XOR<Prisma.MedicationMasterCreateWithoutOpenedContainersInput, Prisma.MedicationMasterUncheckedCreateWithoutOpenedContainersInput>
+  connectOrCreate?: Prisma.MedicationMasterCreateOrConnectWithoutOpenedContainersInput
+  connect?: Prisma.MedicationMasterWhereUniqueInput
+}
+
+export type MedicationMasterUpdateOneRequiredWithoutOpenedContainersNestedInput = {
+  create?: Prisma.XOR<Prisma.MedicationMasterCreateWithoutOpenedContainersInput, Prisma.MedicationMasterUncheckedCreateWithoutOpenedContainersInput>
+  connectOrCreate?: Prisma.MedicationMasterCreateOrConnectWithoutOpenedContainersInput
+  upsert?: Prisma.MedicationMasterUpsertWithoutOpenedContainersInput
+  connect?: Prisma.MedicationMasterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MedicationMasterUpdateToOneWithWhereWithoutOpenedContainersInput, Prisma.MedicationMasterUpdateWithoutOpenedContainersInput>, Prisma.MedicationMasterUncheckedUpdateWithoutOpenedContainersInput>
+}
+
 export type MedicationMasterCreateNestedOneWithoutCycleCountTasksInput = {
   create?: Prisma.XOR<Prisma.MedicationMasterCreateWithoutCycleCountTasksInput, Prisma.MedicationMasterUncheckedCreateWithoutCycleCountTasksInput>
   connectOrCreate?: Prisma.MedicationMasterCreateOrConnectWithoutCycleCountTasksInput
@@ -811,6 +832,7 @@ export type MedicationMasterCreateWithoutInventoryItemsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterUncheckedCreateWithoutInventoryItemsInput = {
@@ -837,6 +859,7 @@ export type MedicationMasterUncheckedCreateWithoutInventoryItemsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterCreateOrConnectWithoutInventoryItemsInput = {
@@ -879,6 +902,7 @@ export type MedicationMasterUpdateWithoutInventoryItemsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterUncheckedUpdateWithoutInventoryItemsInput = {
@@ -905,6 +929,7 @@ export type MedicationMasterUncheckedUpdateWithoutInventoryItemsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterCreateWithoutInventoryTransactionsInput = {
@@ -931,6 +956,7 @@ export type MedicationMasterCreateWithoutInventoryTransactionsInput = {
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterUncheckedCreateWithoutInventoryTransactionsInput = {
@@ -957,6 +983,7 @@ export type MedicationMasterUncheckedCreateWithoutInventoryTransactionsInput = {
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterCreateOrConnectWithoutInventoryTransactionsInput = {
@@ -999,6 +1026,7 @@ export type MedicationMasterUpdateWithoutInventoryTransactionsInput = {
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterUncheckedUpdateWithoutInventoryTransactionsInput = {
@@ -1023,6 +1051,131 @@ export type MedicationMasterUncheckedUpdateWithoutInventoryTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutMedicationNestedInput
+  cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutMedicationNestedInput
+  auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutMedicationNestedInput
+}
+
+export type MedicationMasterCreateWithoutOpenedContainersInput = {
+  id?: string
+  name: string
+  genericName?: string | null
+  strength?: string | null
+  dosageForm?: string | null
+  manufacturer?: string | null
+  ndc?: string | null
+  barcode: string
+  deaSchedule?: string | null
+  inventoryUnit?: $Enums.InventoryUnit
+  isControlled?: boolean
+  isActive?: boolean
+  isMultiDose?: boolean
+  openedUsePolicy?: string | null
+  openedUseDays?: number | null
+  requiresOpenedDate?: boolean
+  requiresWitnessWaste?: boolean
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutMedicationInput
+  inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutMedicationInput
+  cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutMedicationInput
+  auditEvents?: Prisma.AuditEventCreateNestedManyWithoutMedicationInput
+}
+
+export type MedicationMasterUncheckedCreateWithoutOpenedContainersInput = {
+  id?: string
+  name: string
+  genericName?: string | null
+  strength?: string | null
+  dosageForm?: string | null
+  manufacturer?: string | null
+  ndc?: string | null
+  barcode: string
+  deaSchedule?: string | null
+  inventoryUnit?: $Enums.InventoryUnit
+  isControlled?: boolean
+  isActive?: boolean
+  isMultiDose?: boolean
+  openedUsePolicy?: string | null
+  openedUseDays?: number | null
+  requiresOpenedDate?: boolean
+  requiresWitnessWaste?: boolean
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutMedicationInput
+  inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutMedicationInput
+  cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutMedicationInput
+  auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutMedicationInput
+}
+
+export type MedicationMasterCreateOrConnectWithoutOpenedContainersInput = {
+  where: Prisma.MedicationMasterWhereUniqueInput
+  create: Prisma.XOR<Prisma.MedicationMasterCreateWithoutOpenedContainersInput, Prisma.MedicationMasterUncheckedCreateWithoutOpenedContainersInput>
+}
+
+export type MedicationMasterUpsertWithoutOpenedContainersInput = {
+  update: Prisma.XOR<Prisma.MedicationMasterUpdateWithoutOpenedContainersInput, Prisma.MedicationMasterUncheckedUpdateWithoutOpenedContainersInput>
+  create: Prisma.XOR<Prisma.MedicationMasterCreateWithoutOpenedContainersInput, Prisma.MedicationMasterUncheckedCreateWithoutOpenedContainersInput>
+  where?: Prisma.MedicationMasterWhereInput
+}
+
+export type MedicationMasterUpdateToOneWithWhereWithoutOpenedContainersInput = {
+  where?: Prisma.MedicationMasterWhereInput
+  data: Prisma.XOR<Prisma.MedicationMasterUpdateWithoutOpenedContainersInput, Prisma.MedicationMasterUncheckedUpdateWithoutOpenedContainersInput>
+}
+
+export type MedicationMasterUpdateWithoutOpenedContainersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  strength?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dosageForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ndc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  deaSchedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryUnit?: Prisma.EnumInventoryUnitFieldUpdateOperationsInput | $Enums.InventoryUnit
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isMultiDose?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openedUsePolicy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openedUseDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresOpenedDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requiresWitnessWaste?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutMedicationNestedInput
+  inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutMedicationNestedInput
+  cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutMedicationNestedInput
+  auditEvents?: Prisma.AuditEventUpdateManyWithoutMedicationNestedInput
+}
+
+export type MedicationMasterUncheckedUpdateWithoutOpenedContainersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  strength?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dosageForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ndc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  deaSchedule?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inventoryUnit?: Prisma.EnumInventoryUnitFieldUpdateOperationsInput | $Enums.InventoryUnit
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isMultiDose?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  openedUsePolicy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openedUseDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresOpenedDate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  requiresWitnessWaste?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutMedicationNestedInput
+  inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutMedicationNestedInput
 }
@@ -1051,6 +1204,7 @@ export type MedicationMasterCreateWithoutCycleCountTasksInput = {
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutMedicationInput
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterUncheckedCreateWithoutCycleCountTasksInput = {
@@ -1077,6 +1231,7 @@ export type MedicationMasterUncheckedCreateWithoutCycleCountTasksInput = {
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutMedicationInput
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutMedicationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterCreateOrConnectWithoutCycleCountTasksInput = {
@@ -1119,6 +1274,7 @@ export type MedicationMasterUpdateWithoutCycleCountTasksInput = {
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutMedicationNestedInput
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterUncheckedUpdateWithoutCycleCountTasksInput = {
@@ -1145,6 +1301,7 @@ export type MedicationMasterUncheckedUpdateWithoutCycleCountTasksInput = {
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutMedicationNestedInput
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutMedicationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterCreateWithoutAuditEventsInput = {
@@ -1171,6 +1328,7 @@ export type MedicationMasterCreateWithoutAuditEventsInput = {
   inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutMedicationInput
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterUncheckedCreateWithoutAuditEventsInput = {
@@ -1197,6 +1355,7 @@ export type MedicationMasterUncheckedCreateWithoutAuditEventsInput = {
   inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutMedicationInput
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutMedicationInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutMedicationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutMedicationInput
 }
 
 export type MedicationMasterCreateOrConnectWithoutAuditEventsInput = {
@@ -1239,6 +1398,7 @@ export type MedicationMasterUpdateWithoutAuditEventsInput = {
   inventoryItems?: Prisma.InventoryItemUpdateManyWithoutMedicationNestedInput
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutMedicationNestedInput
 }
 
 export type MedicationMasterUncheckedUpdateWithoutAuditEventsInput = {
@@ -1265,6 +1425,7 @@ export type MedicationMasterUncheckedUpdateWithoutAuditEventsInput = {
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutMedicationNestedInput
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutMedicationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutMedicationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutMedicationNestedInput
 }
 
 
@@ -1277,6 +1438,7 @@ export type MedicationMasterCountOutputType = {
   inventoryTransactions: number
   cycleCountTasks: number
   auditEvents: number
+  openedContainers: number
 }
 
 export type MedicationMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1284,6 +1446,7 @@ export type MedicationMasterCountOutputTypeSelect<ExtArgs extends runtime.Types.
   inventoryTransactions?: boolean | MedicationMasterCountOutputTypeCountInventoryTransactionsArgs
   cycleCountTasks?: boolean | MedicationMasterCountOutputTypeCountCycleCountTasksArgs
   auditEvents?: boolean | MedicationMasterCountOutputTypeCountAuditEventsArgs
+  openedContainers?: boolean | MedicationMasterCountOutputTypeCountOpenedContainersArgs
 }
 
 /**
@@ -1324,6 +1487,13 @@ export type MedicationMasterCountOutputTypeCountAuditEventsArgs<ExtArgs extends 
   where?: Prisma.AuditEventWhereInput
 }
 
+/**
+ * MedicationMasterCountOutputType without action
+ */
+export type MedicationMasterCountOutputTypeCountOpenedContainersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OpenedContainerWhereInput
+}
+
 
 export type MedicationMasterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1350,6 +1520,7 @@ export type MedicationMasterSelect<ExtArgs extends runtime.Types.Extensions.Inte
   inventoryTransactions?: boolean | Prisma.MedicationMaster$inventoryTransactionsArgs<ExtArgs>
   cycleCountTasks?: boolean | Prisma.MedicationMaster$cycleCountTasksArgs<ExtArgs>
   auditEvents?: boolean | Prisma.MedicationMaster$auditEventsArgs<ExtArgs>
+  openedContainers?: boolean | Prisma.MedicationMaster$openedContainersArgs<ExtArgs>
   _count?: boolean | Prisma.MedicationMasterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["medicationMaster"]>
 
@@ -1428,6 +1599,7 @@ export type MedicationMasterInclude<ExtArgs extends runtime.Types.Extensions.Int
   inventoryTransactions?: boolean | Prisma.MedicationMaster$inventoryTransactionsArgs<ExtArgs>
   cycleCountTasks?: boolean | Prisma.MedicationMaster$cycleCountTasksArgs<ExtArgs>
   auditEvents?: boolean | Prisma.MedicationMaster$auditEventsArgs<ExtArgs>
+  openedContainers?: boolean | Prisma.MedicationMaster$openedContainersArgs<ExtArgs>
   _count?: boolean | Prisma.MedicationMasterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MedicationMasterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1440,6 +1612,7 @@ export type $MedicationMasterPayload<ExtArgs extends runtime.Types.Extensions.In
     inventoryTransactions: Prisma.$InventoryTransactionPayload<ExtArgs>[]
     cycleCountTasks: Prisma.$CycleCountTaskPayload<ExtArgs>[]
     auditEvents: Prisma.$AuditEventPayload<ExtArgs>[]
+    openedContainers: Prisma.$OpenedContainerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1860,6 +2033,7 @@ export interface Prisma__MedicationMasterClient<T, Null = never, ExtArgs extends
   inventoryTransactions<T extends Prisma.MedicationMaster$inventoryTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MedicationMaster$inventoryTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cycleCountTasks<T extends Prisma.MedicationMaster$cycleCountTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MedicationMaster$cycleCountTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CycleCountTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditEvents<T extends Prisma.MedicationMaster$auditEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MedicationMaster$auditEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  openedContainers<T extends Prisma.MedicationMaster$openedContainersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MedicationMaster$openedContainersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpenedContainerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2395,6 +2569,30 @@ export type MedicationMaster$auditEventsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.AuditEventScalarFieldEnum | Prisma.AuditEventScalarFieldEnum[]
+}
+
+/**
+ * MedicationMaster.openedContainers
+ */
+export type MedicationMaster$openedContainersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OpenedContainer
+   */
+  select?: Prisma.OpenedContainerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OpenedContainer
+   */
+  omit?: Prisma.OpenedContainerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpenedContainerInclude<ExtArgs> | null
+  where?: Prisma.OpenedContainerWhereInput
+  orderBy?: Prisma.OpenedContainerOrderByWithRelationInput | Prisma.OpenedContainerOrderByWithRelationInput[]
+  cursor?: Prisma.OpenedContainerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OpenedContainerScalarFieldEnum | Prisma.OpenedContainerScalarFieldEnum[]
 }
 
 /**

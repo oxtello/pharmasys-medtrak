@@ -43,6 +43,11 @@ export type InventoryItem = Prisma.InventoryItemModel
  */
 export type InventoryTransaction = Prisma.InventoryTransactionModel
 /**
+ * Model OpenedContainer
+ * 
+ */
+export type OpenedContainer = Prisma.OpenedContainerModel
+/**
  * Model CycleCountTask
  * 
  */

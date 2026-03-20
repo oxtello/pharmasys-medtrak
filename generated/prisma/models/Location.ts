@@ -196,6 +196,7 @@ export type LocationWhereInput = {
   reconciliationReports?: Prisma.ReconciliationReportListRelationFilter
   auditEvents?: Prisma.AuditEventListRelationFilter
   homeUsers?: Prisma.UserListRelationFilter
+  openedContainers?: Prisma.OpenedContainerListRelationFilter
 }
 
 export type LocationOrderByWithRelationInput = {
@@ -211,6 +212,7 @@ export type LocationOrderByWithRelationInput = {
   reconciliationReports?: Prisma.ReconciliationReportOrderByRelationAggregateInput
   auditEvents?: Prisma.AuditEventOrderByRelationAggregateInput
   homeUsers?: Prisma.UserOrderByRelationAggregateInput
+  openedContainers?: Prisma.OpenedContainerOrderByRelationAggregateInput
 }
 
 export type LocationWhereUniqueInput = Prisma.AtLeast<{
@@ -229,6 +231,7 @@ export type LocationWhereUniqueInput = Prisma.AtLeast<{
   reconciliationReports?: Prisma.ReconciliationReportListRelationFilter
   auditEvents?: Prisma.AuditEventListRelationFilter
   homeUsers?: Prisma.UserListRelationFilter
+  openedContainers?: Prisma.OpenedContainerListRelationFilter
 }, "id" | "code">
 
 export type LocationOrderByWithAggregationInput = {
@@ -268,6 +271,7 @@ export type LocationCreateInput = {
   reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateInput = {
@@ -283,6 +287,7 @@ export type LocationUncheckedCreateInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUpdateInput = {
@@ -298,6 +303,7 @@ export type LocationUpdateInput = {
   reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateInput = {
@@ -313,6 +319,7 @@ export type LocationUncheckedUpdateInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUncheckedUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationCreateManyInput = {
@@ -423,6 +430,20 @@ export type LocationUpdateOneRequiredWithoutInventoryTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutInventoryTransactionsInput, Prisma.LocationUpdateWithoutInventoryTransactionsInput>, Prisma.LocationUncheckedUpdateWithoutInventoryTransactionsInput>
 }
 
+export type LocationCreateNestedOneWithoutOpenedContainersInput = {
+  create?: Prisma.XOR<Prisma.LocationCreateWithoutOpenedContainersInput, Prisma.LocationUncheckedCreateWithoutOpenedContainersInput>
+  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutOpenedContainersInput
+  connect?: Prisma.LocationWhereUniqueInput
+}
+
+export type LocationUpdateOneRequiredWithoutOpenedContainersNestedInput = {
+  create?: Prisma.XOR<Prisma.LocationCreateWithoutOpenedContainersInput, Prisma.LocationUncheckedCreateWithoutOpenedContainersInput>
+  connectOrCreate?: Prisma.LocationCreateOrConnectWithoutOpenedContainersInput
+  upsert?: Prisma.LocationUpsertWithoutOpenedContainersInput
+  connect?: Prisma.LocationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LocationUpdateToOneWithWhereWithoutOpenedContainersInput, Prisma.LocationUpdateWithoutOpenedContainersInput>, Prisma.LocationUncheckedUpdateWithoutOpenedContainersInput>
+}
+
 export type LocationCreateNestedOneWithoutCycleCountTasksInput = {
   create?: Prisma.XOR<Prisma.LocationCreateWithoutCycleCountTasksInput, Prisma.LocationUncheckedCreateWithoutCycleCountTasksInput>
   connectOrCreate?: Prisma.LocationCreateOrConnectWithoutCycleCountTasksInput
@@ -479,6 +500,7 @@ export type LocationCreateWithoutHomeUsersInput = {
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutLocationInput
   reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutHomeUsersInput = {
@@ -493,6 +515,7 @@ export type LocationUncheckedCreateWithoutHomeUsersInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutLocationInput
   reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutHomeUsersInput = {
@@ -523,6 +546,7 @@ export type LocationUpdateWithoutHomeUsersInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutLocationNestedInput
   reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutHomeUsersInput = {
@@ -537,6 +561,7 @@ export type LocationUncheckedUpdateWithoutHomeUsersInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutLocationNestedInput
   reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationCreateWithoutInventoryItemsInput = {
@@ -551,6 +576,7 @@ export type LocationCreateWithoutInventoryItemsInput = {
   reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutInventoryItemsInput = {
@@ -565,6 +591,7 @@ export type LocationUncheckedCreateWithoutInventoryItemsInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutInventoryItemsInput = {
@@ -595,6 +622,7 @@ export type LocationUpdateWithoutInventoryItemsInput = {
   reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutInventoryItemsInput = {
@@ -609,6 +637,7 @@ export type LocationUncheckedUpdateWithoutInventoryItemsInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUncheckedUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationCreateWithoutInventoryTransactionsInput = {
@@ -623,6 +652,7 @@ export type LocationCreateWithoutInventoryTransactionsInput = {
   reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutInventoryTransactionsInput = {
@@ -637,6 +667,7 @@ export type LocationUncheckedCreateWithoutInventoryTransactionsInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutInventoryTransactionsInput = {
@@ -667,6 +698,7 @@ export type LocationUpdateWithoutInventoryTransactionsInput = {
   reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutInventoryTransactionsInput = {
@@ -677,6 +709,83 @@ export type LocationUncheckedUpdateWithoutInventoryTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutLocationNestedInput
+  cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutLocationNestedInput
+  reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
+  auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
+  homeUsers?: Prisma.UserUncheckedUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
+}
+
+export type LocationCreateWithoutOpenedContainersInput = {
+  id?: string
+  name: string
+  code: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventoryItems?: Prisma.InventoryItemCreateNestedManyWithoutLocationInput
+  inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutLocationInput
+  cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutLocationInput
+  reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
+  auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
+  homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+}
+
+export type LocationUncheckedCreateWithoutOpenedContainersInput = {
+  id?: string
+  name: string
+  code: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventoryItems?: Prisma.InventoryItemUncheckedCreateNestedManyWithoutLocationInput
+  inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutLocationInput
+  cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutLocationInput
+  reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
+  auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
+  homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+}
+
+export type LocationCreateOrConnectWithoutOpenedContainersInput = {
+  where: Prisma.LocationWhereUniqueInput
+  create: Prisma.XOR<Prisma.LocationCreateWithoutOpenedContainersInput, Prisma.LocationUncheckedCreateWithoutOpenedContainersInput>
+}
+
+export type LocationUpsertWithoutOpenedContainersInput = {
+  update: Prisma.XOR<Prisma.LocationUpdateWithoutOpenedContainersInput, Prisma.LocationUncheckedUpdateWithoutOpenedContainersInput>
+  create: Prisma.XOR<Prisma.LocationCreateWithoutOpenedContainersInput, Prisma.LocationUncheckedCreateWithoutOpenedContainersInput>
+  where?: Prisma.LocationWhereInput
+}
+
+export type LocationUpdateToOneWithWhereWithoutOpenedContainersInput = {
+  where?: Prisma.LocationWhereInput
+  data: Prisma.XOR<Prisma.LocationUpdateWithoutOpenedContainersInput, Prisma.LocationUncheckedUpdateWithoutOpenedContainersInput>
+}
+
+export type LocationUpdateWithoutOpenedContainersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryItems?: Prisma.InventoryItemUpdateManyWithoutLocationNestedInput
+  inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutLocationNestedInput
+  cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutLocationNestedInput
+  reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
+  auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
+  homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+}
+
+export type LocationUncheckedUpdateWithoutOpenedContainersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryItems?: Prisma.InventoryItemUncheckedUpdateManyWithoutLocationNestedInput
+  inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutLocationNestedInput
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutLocationNestedInput
   reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
@@ -695,6 +804,7 @@ export type LocationCreateWithoutCycleCountTasksInput = {
   reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutCycleCountTasksInput = {
@@ -709,6 +819,7 @@ export type LocationUncheckedCreateWithoutCycleCountTasksInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutCycleCountTasksInput = {
@@ -739,6 +850,7 @@ export type LocationUpdateWithoutCycleCountTasksInput = {
   reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutCycleCountTasksInput = {
@@ -753,6 +865,7 @@ export type LocationUncheckedUpdateWithoutCycleCountTasksInput = {
   reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUncheckedUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationCreateWithoutReconciliationReportsInput = {
@@ -767,6 +880,7 @@ export type LocationCreateWithoutReconciliationReportsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutReconciliationReportsInput = {
@@ -781,6 +895,7 @@ export type LocationUncheckedCreateWithoutReconciliationReportsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutLocationInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutReconciliationReportsInput = {
@@ -811,6 +926,7 @@ export type LocationUpdateWithoutReconciliationReportsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutReconciliationReportsInput = {
@@ -825,6 +941,7 @@ export type LocationUncheckedUpdateWithoutReconciliationReportsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutLocationNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUncheckedUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationCreateWithoutAuditEventsInput = {
@@ -839,6 +956,7 @@ export type LocationCreateWithoutAuditEventsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutLocationInput
   reconciliationReports?: Prisma.ReconciliationReportCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutLocationInput
 }
 
 export type LocationUncheckedCreateWithoutAuditEventsInput = {
@@ -853,6 +971,7 @@ export type LocationUncheckedCreateWithoutAuditEventsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutLocationInput
   reconciliationReports?: Prisma.ReconciliationReportUncheckedCreateNestedManyWithoutLocationInput
   homeUsers?: Prisma.UserUncheckedCreateNestedManyWithoutHomeLocationInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutLocationInput
 }
 
 export type LocationCreateOrConnectWithoutAuditEventsInput = {
@@ -883,6 +1002,7 @@ export type LocationUpdateWithoutAuditEventsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutLocationNestedInput
   reconciliationReports?: Prisma.ReconciliationReportUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutLocationNestedInput
 }
 
 export type LocationUncheckedUpdateWithoutAuditEventsInput = {
@@ -897,6 +1017,7 @@ export type LocationUncheckedUpdateWithoutAuditEventsInput = {
   cycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutLocationNestedInput
   reconciliationReports?: Prisma.ReconciliationReportUncheckedUpdateManyWithoutLocationNestedInput
   homeUsers?: Prisma.UserUncheckedUpdateManyWithoutHomeLocationNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutLocationNestedInput
 }
 
 
@@ -911,6 +1032,7 @@ export type LocationCountOutputType = {
   reconciliationReports: number
   auditEvents: number
   homeUsers: number
+  openedContainers: number
 }
 
 export type LocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -920,6 +1042,7 @@ export type LocationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   reconciliationReports?: boolean | LocationCountOutputTypeCountReconciliationReportsArgs
   auditEvents?: boolean | LocationCountOutputTypeCountAuditEventsArgs
   homeUsers?: boolean | LocationCountOutputTypeCountHomeUsersArgs
+  openedContainers?: boolean | LocationCountOutputTypeCountOpenedContainersArgs
 }
 
 /**
@@ -974,6 +1097,13 @@ export type LocationCountOutputTypeCountHomeUsersArgs<ExtArgs extends runtime.Ty
   where?: Prisma.UserWhereInput
 }
 
+/**
+ * LocationCountOutputType without action
+ */
+export type LocationCountOutputTypeCountOpenedContainersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OpenedContainerWhereInput
+}
+
 
 export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -988,6 +1118,7 @@ export type LocationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   reconciliationReports?: boolean | Prisma.Location$reconciliationReportsArgs<ExtArgs>
   auditEvents?: boolean | Prisma.Location$auditEventsArgs<ExtArgs>
   homeUsers?: boolean | Prisma.Location$homeUsersArgs<ExtArgs>
+  openedContainers?: boolean | Prisma.Location$openedContainersArgs<ExtArgs>
   _count?: boolean | Prisma.LocationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["location"]>
 
@@ -1026,6 +1157,7 @@ export type LocationInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   reconciliationReports?: boolean | Prisma.Location$reconciliationReportsArgs<ExtArgs>
   auditEvents?: boolean | Prisma.Location$auditEventsArgs<ExtArgs>
   homeUsers?: boolean | Prisma.Location$homeUsersArgs<ExtArgs>
+  openedContainers?: boolean | Prisma.Location$openedContainersArgs<ExtArgs>
   _count?: boolean | Prisma.LocationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LocationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1040,6 +1172,7 @@ export type $LocationPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     reconciliationReports: Prisma.$ReconciliationReportPayload<ExtArgs>[]
     auditEvents: Prisma.$AuditEventPayload<ExtArgs>[]
     homeUsers: Prisma.$UserPayload<ExtArgs>[]
+    openedContainers: Prisma.$OpenedContainerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1448,6 +1581,7 @@ export interface Prisma__LocationClient<T, Null = never, ExtArgs extends runtime
   reconciliationReports<T extends Prisma.Location$reconciliationReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$reconciliationReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReconciliationReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditEvents<T extends Prisma.Location$auditEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$auditEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   homeUsers<T extends Prisma.Location$homeUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$homeUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  openedContainers<T extends Prisma.Location$openedContainersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Location$openedContainersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpenedContainerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2017,6 +2151,30 @@ export type Location$homeUsersArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * Location.openedContainers
+ */
+export type Location$openedContainersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OpenedContainer
+   */
+  select?: Prisma.OpenedContainerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OpenedContainer
+   */
+  omit?: Prisma.OpenedContainerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpenedContainerInclude<ExtArgs> | null
+  where?: Prisma.OpenedContainerWhereInput
+  orderBy?: Prisma.OpenedContainerOrderByWithRelationInput | Prisma.OpenedContainerOrderByWithRelationInput[]
+  cursor?: Prisma.OpenedContainerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OpenedContainerScalarFieldEnum | Prisma.OpenedContainerScalarFieldEnum[]
 }
 
 /**

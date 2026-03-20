@@ -41,6 +41,8 @@ export type VialLabelInput = {
   budDate?: string | null;
 };
 
+  const clean = safeZplText(containerId).replace(/\s+/g, "_");
+  return `${clean || "opened-container-label"}.zpl`;
 export function buildVialLabelFilename(input: VialLabelInput) {
   const safeId = safeZplText(input.containerId).replace(/\s+/g, "-");
   return `medtrak-vial-label-${safeId || "label"}.zpl`;

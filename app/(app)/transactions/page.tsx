@@ -148,7 +148,7 @@ export default function TransactionsPage() {
       action: "Receive",
       quantity: Number(item.quantityReceived || 0),
       location: item.location,
-      user: CURRENT_USER.name,
+      user: "Current User", 
       details: `Lot ${item.lotNumber} • Exp ${item.expirationDate}`,
     }));
 
@@ -159,7 +159,7 @@ export default function TransactionsPage() {
       action: "Dispense",
       quantity: -Number(item.quantity || 0),
       location: item.location,
-      user: CURRENT_USER.name,
+      user: "Current User",
       details: item.patient
         ? `Patient: ${item.patient}`
         : item.encounterId
@@ -178,7 +178,7 @@ export default function TransactionsPage() {
         action: "Adjust",
         quantity: signedQty,
         location: item.location,
-        user: CURRENT_USER.name,
+        user: "Current User",
         details: `${item.adjustmentType} • ${item.reasonCode}`,
       };
     });
@@ -190,7 +190,7 @@ export default function TransactionsPage() {
       action: "Waste",
       quantity: -Number(item.quantity || 0),
       location: item.location,
-      user: CURRENT_USER.name,
+      user: "Current User",
       details: item.reasonCode,
     }));
 
@@ -201,7 +201,7 @@ export default function TransactionsPage() {
       action: "Transfer",
       quantity: -Number(item.quantity || 0),
       location: `${item.fromLocation} → ${item.toLocation}`,
-      user: CURRENT_USER.name,
+      user: "Current User",
       details: item.notes || "Location transfer",
     }));
 

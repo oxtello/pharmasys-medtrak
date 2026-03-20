@@ -167,8 +167,13 @@ function normalizeStatus(value: unknown): MedicationMasterStatus {
   return normalizeUpper(value) === "INACTIVE" ? "INACTIVE" : "ACTIVE";
 }
 
+type MedicationMasterRecordInput = Partial<MedicationMasterRecord> & {
+  name?: string;
+  openedUseDays?: number | string | null;
+};
+
 function normalizeMedicationMasterRecord(
-  input: Partial<MedicationMasterRecord>,
+  input: MedicationMasterRecordInput,
   existingRecords: MedicationMasterRecord[]
 ): MedicationMasterRecord {
   const isMultidose = toBoolean(input.isMultidose, false);
@@ -188,7 +193,7 @@ function normalizeMedicationMasterRecord(
     id: normalizeText(input.id) || generateMedicationMasterId(existingRecords),
     barcode: normalizeText(input.barcode),
     medicationName:
-      normalizeText(input.medicationName) || normalizeText((input as any).name),
+      normalizeText(input.medicationName) || normalizeText(input.name),
     strength: normalizeText(input.strength),
     dosageForm: normalizeText(input.dosageForm),
     manufacturer: normalizeText(input.manufacturer),
@@ -221,7 +226,7 @@ export function safeReadMedicationMaster(): MedicationMasterRecord[] {
     const raw = localStorage.getItem(MEDICATION_MASTER_STORAGE_KEY);
     if (!raw) return [];
 
-    const parsed = JSON.parse(raw) as Partial<MedicationMasterRecord>[];
+    const parsed = JSON.parse(raw) as MedicationMasterRecordInput[];
     if (!Array.isArray(parsed)) return [];
 
     const normalized = parsed.map((item, index, arr) =>
@@ -313,6 +318,7 @@ export function upsertMedicationMasterRecord(
       ...input,
       barcode,
       medicationName,
+      openedUseDays: toNumberOrNull(input.openedUseDays ?? existing?.openedUseDays),
       createdAt: existing?.createdAt ?? nowIso(),
     },
     records
@@ -400,7 +406,7 @@ export function importMedicationMasterJson(
   const normalized: MedicationMasterRecord[] = [];
   const seenBarcodes = new Set<string>();
 
-  for (const row of parsed as Partial<MedicationMasterRecord>[]) {
+  for (const row of parsed as MedicationMasterRecordInput[]) {
     const normalizedRecord = normalizeMedicationMasterRecord(row, normalized);
 
     if (!normalizedRecord.barcode) {

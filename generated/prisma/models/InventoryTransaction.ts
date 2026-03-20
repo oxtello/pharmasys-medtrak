@@ -50,6 +50,7 @@ export type InventoryTransactionMinAggregateOutputType = {
   barcode: string | null
   note: string | null
   referenceId: string | null
+  containerId: string | null
   previousHash: string | null
   hash: string | null
   chainVersion: number | null
@@ -71,6 +72,7 @@ export type InventoryTransactionMaxAggregateOutputType = {
   barcode: string | null
   note: string | null
   referenceId: string | null
+  containerId: string | null
   previousHash: string | null
   hash: string | null
   chainVersion: number | null
@@ -92,6 +94,7 @@ export type InventoryTransactionCountAggregateOutputType = {
   barcode: number
   note: number
   referenceId: number
+  containerId: number
   previousHash: number
   hash: number
   chainVersion: number
@@ -125,6 +128,7 @@ export type InventoryTransactionMinAggregateInputType = {
   barcode?: true
   note?: true
   referenceId?: true
+  containerId?: true
   previousHash?: true
   hash?: true
   chainVersion?: true
@@ -146,6 +150,7 @@ export type InventoryTransactionMaxAggregateInputType = {
   barcode?: true
   note?: true
   referenceId?: true
+  containerId?: true
   previousHash?: true
   hash?: true
   chainVersion?: true
@@ -167,6 +172,7 @@ export type InventoryTransactionCountAggregateInputType = {
   barcode?: true
   note?: true
   referenceId?: true
+  containerId?: true
   previousHash?: true
   hash?: true
   chainVersion?: true
@@ -275,6 +281,7 @@ export type InventoryTransactionGroupByOutputType = {
   barcode: string | null
   note: string | null
   referenceId: string | null
+  containerId: string | null
   previousHash: string | null
   hash: string | null
   chainVersion: number
@@ -319,6 +326,7 @@ export type InventoryTransactionWhereInput = {
   barcode?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   note?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   referenceId?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
+  containerId?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   previousHash?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   hash?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   chainVersion?: Prisma.IntFilter<"InventoryTransaction"> | number
@@ -343,6 +351,7 @@ export type InventoryTransactionOrderByWithRelationInput = {
   barcode?: Prisma.SortOrderInput | Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  containerId?: Prisma.SortOrderInput | Prisma.SortOrder
   previousHash?: Prisma.SortOrderInput | Prisma.SortOrder
   hash?: Prisma.SortOrderInput | Prisma.SortOrder
   chainVersion?: Prisma.SortOrder
@@ -371,6 +380,7 @@ export type InventoryTransactionWhereUniqueInput = Prisma.AtLeast<{
   barcode?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   note?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   referenceId?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
+  containerId?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   previousHash?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   chainVersion?: Prisma.IntFilter<"InventoryTransaction"> | number
   occurredAt?: Prisma.DateTimeFilter<"InventoryTransaction"> | Date | string
@@ -394,6 +404,7 @@ export type InventoryTransactionOrderByWithAggregationInput = {
   barcode?: Prisma.SortOrderInput | Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  containerId?: Prisma.SortOrderInput | Prisma.SortOrder
   previousHash?: Prisma.SortOrderInput | Prisma.SortOrder
   hash?: Prisma.SortOrderInput | Prisma.SortOrder
   chainVersion?: Prisma.SortOrder
@@ -423,6 +434,7 @@ export type InventoryTransactionScalarWhereWithAggregatesInput = {
   barcode?: Prisma.StringNullableWithAggregatesFilter<"InventoryTransaction"> | string | null
   note?: Prisma.StringNullableWithAggregatesFilter<"InventoryTransaction"> | string | null
   referenceId?: Prisma.StringNullableWithAggregatesFilter<"InventoryTransaction"> | string | null
+  containerId?: Prisma.StringNullableWithAggregatesFilter<"InventoryTransaction"> | string | null
   previousHash?: Prisma.StringNullableWithAggregatesFilter<"InventoryTransaction"> | string | null
   hash?: Prisma.StringNullableWithAggregatesFilter<"InventoryTransaction"> | string | null
   chainVersion?: Prisma.IntWithAggregatesFilter<"InventoryTransaction"> | number
@@ -441,6 +453,7 @@ export type InventoryTransactionCreateInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -465,6 +478,7 @@ export type InventoryTransactionUncheckedCreateInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -483,6 +497,7 @@ export type InventoryTransactionUpdateInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -507,6 +522,7 @@ export type InventoryTransactionUncheckedUpdateInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -528,6 +544,7 @@ export type InventoryTransactionCreateManyInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -546,6 +563,7 @@ export type InventoryTransactionUpdateManyMutationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -567,6 +585,7 @@ export type InventoryTransactionUncheckedUpdateManyInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -598,6 +617,7 @@ export type InventoryTransactionCountOrderByAggregateInput = {
   barcode?: Prisma.SortOrder
   note?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
+  containerId?: Prisma.SortOrder
   previousHash?: Prisma.SortOrder
   hash?: Prisma.SortOrder
   chainVersion?: Prisma.SortOrder
@@ -624,6 +644,7 @@ export type InventoryTransactionMaxOrderByAggregateInput = {
   barcode?: Prisma.SortOrder
   note?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
+  containerId?: Prisma.SortOrder
   previousHash?: Prisma.SortOrder
   hash?: Prisma.SortOrder
   chainVersion?: Prisma.SortOrder
@@ -645,6 +666,7 @@ export type InventoryTransactionMinOrderByAggregateInput = {
   barcode?: Prisma.SortOrder
   note?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
+  containerId?: Prisma.SortOrder
   previousHash?: Prisma.SortOrder
   hash?: Prisma.SortOrder
   chainVersion?: Prisma.SortOrder
@@ -806,6 +828,7 @@ export type InventoryTransactionCreateWithoutActorInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -828,6 +851,7 @@ export type InventoryTransactionUncheckedCreateWithoutActorInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -878,6 +902,7 @@ export type InventoryTransactionScalarWhereInput = {
   barcode?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   note?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   referenceId?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
+  containerId?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   previousHash?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   hash?: Prisma.StringNullableFilter<"InventoryTransaction"> | string | null
   chainVersion?: Prisma.IntFilter<"InventoryTransaction"> | number
@@ -896,6 +921,7 @@ export type InventoryTransactionCreateWithoutLocationInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -918,6 +944,7 @@ export type InventoryTransactionUncheckedCreateWithoutLocationInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -962,6 +989,7 @@ export type InventoryTransactionCreateWithoutMedicationInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -984,6 +1012,7 @@ export type InventoryTransactionUncheckedCreateWithoutMedicationInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -1030,6 +1059,7 @@ export type InventoryTransactionCreateManyActorInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -1048,6 +1078,7 @@ export type InventoryTransactionUpdateWithoutActorInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1070,6 +1101,7 @@ export type InventoryTransactionUncheckedUpdateWithoutActorInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1090,6 +1122,7 @@ export type InventoryTransactionUncheckedUpdateManyWithoutActorInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1110,6 +1143,7 @@ export type InventoryTransactionCreateManyLocationInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -1128,6 +1162,7 @@ export type InventoryTransactionUpdateWithoutLocationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1150,6 +1185,7 @@ export type InventoryTransactionUncheckedUpdateWithoutLocationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1170,6 +1206,7 @@ export type InventoryTransactionUncheckedUpdateManyWithoutLocationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1190,6 +1227,7 @@ export type InventoryTransactionCreateManyMedicationInput = {
   barcode?: string | null
   note?: string | null
   referenceId?: string | null
+  containerId?: string | null
   previousHash?: string | null
   hash?: string | null
   chainVersion?: number
@@ -1208,6 +1246,7 @@ export type InventoryTransactionUpdateWithoutMedicationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1230,6 +1269,7 @@ export type InventoryTransactionUncheckedUpdateWithoutMedicationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1250,6 +1290,7 @@ export type InventoryTransactionUncheckedUpdateManyWithoutMedicationInput = {
   barcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  containerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   chainVersion?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1273,6 +1314,7 @@ export type InventoryTransactionSelect<ExtArgs extends runtime.Types.Extensions.
   barcode?: boolean
   note?: boolean
   referenceId?: boolean
+  containerId?: boolean
   previousHash?: boolean
   hash?: boolean
   chainVersion?: boolean
@@ -1297,6 +1339,7 @@ export type InventoryTransactionSelectCreateManyAndReturn<ExtArgs extends runtim
   barcode?: boolean
   note?: boolean
   referenceId?: boolean
+  containerId?: boolean
   previousHash?: boolean
   hash?: boolean
   chainVersion?: boolean
@@ -1321,6 +1364,7 @@ export type InventoryTransactionSelectUpdateManyAndReturn<ExtArgs extends runtim
   barcode?: boolean
   note?: boolean
   referenceId?: boolean
+  containerId?: boolean
   previousHash?: boolean
   hash?: boolean
   chainVersion?: boolean
@@ -1345,6 +1389,7 @@ export type InventoryTransactionSelectScalar = {
   barcode?: boolean
   note?: boolean
   referenceId?: boolean
+  containerId?: boolean
   previousHash?: boolean
   hash?: boolean
   chainVersion?: boolean
@@ -1352,7 +1397,7 @@ export type InventoryTransactionSelectScalar = {
   createdAt?: boolean
 }
 
-export type InventoryTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "locationId" | "medicationId" | "actorUserId" | "witnessUserId" | "quantity" | "inventoryUnit" | "lotNumber" | "expirationDate" | "barcode" | "note" | "referenceId" | "previousHash" | "hash" | "chainVersion" | "occurredAt" | "createdAt", ExtArgs["result"]["inventoryTransaction"]>
+export type InventoryTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "locationId" | "medicationId" | "actorUserId" | "witnessUserId" | "quantity" | "inventoryUnit" | "lotNumber" | "expirationDate" | "barcode" | "note" | "referenceId" | "containerId" | "previousHash" | "hash" | "chainVersion" | "occurredAt" | "createdAt", ExtArgs["result"]["inventoryTransaction"]>
 export type InventoryTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   medication?: boolean | Prisma.MedicationMasterDefaultArgs<ExtArgs>
@@ -1390,6 +1435,7 @@ export type $InventoryTransactionPayload<ExtArgs extends runtime.Types.Extension
     barcode: string | null
     note: string | null
     referenceId: string | null
+    containerId: string | null
     previousHash: string | null
     hash: string | null
     chainVersion: number
@@ -1834,6 +1880,7 @@ export interface InventoryTransactionFieldRefs {
   readonly barcode: Prisma.FieldRef<"InventoryTransaction", 'String'>
   readonly note: Prisma.FieldRef<"InventoryTransaction", 'String'>
   readonly referenceId: Prisma.FieldRef<"InventoryTransaction", 'String'>
+  readonly containerId: Prisma.FieldRef<"InventoryTransaction", 'String'>
   readonly previousHash: Prisma.FieldRef<"InventoryTransaction", 'String'>
   readonly hash: Prisma.FieldRef<"InventoryTransaction", 'String'>
   readonly chainVersion: Prisma.FieldRef<"InventoryTransaction", 'Int'>

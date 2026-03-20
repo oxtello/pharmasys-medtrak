@@ -219,6 +219,7 @@ export type UserWhereInput = {
   auditLogs?: Prisma.AuditLogListRelationFilter
   completedCycleCountTasks?: Prisma.CycleCountTaskListRelationFilter
   auditEvents?: Prisma.AuditEventListRelationFilter
+  openedContainers?: Prisma.OpenedContainerListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -236,6 +237,7 @@ export type UserOrderByWithRelationInput = {
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   completedCycleCountTasks?: Prisma.CycleCountTaskOrderByRelationAggregateInput
   auditEvents?: Prisma.AuditEventOrderByRelationAggregateInput
+  openedContainers?: Prisma.OpenedContainerOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +258,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   auditLogs?: Prisma.AuditLogListRelationFilter
   completedCycleCountTasks?: Prisma.CycleCountTaskListRelationFilter
   auditEvents?: Prisma.AuditEventListRelationFilter
+  openedContainers?: Prisma.OpenedContainerListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -302,6 +305,7 @@ export type UserCreateInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -318,6 +322,7 @@ export type UserUncheckedCreateInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUpdateInput = {
@@ -334,6 +339,7 @@ export type UserUpdateInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -350,6 +356,7 @@ export type UserUncheckedUpdateInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -519,6 +526,22 @@ export type UserUpdateOneRequiredWithoutInventoryTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInventoryTransactionsInput, Prisma.UserUpdateWithoutInventoryTransactionsInput>, Prisma.UserUncheckedUpdateWithoutInventoryTransactionsInput>
 }
 
+export type UserCreateNestedOneWithoutOpenedContainersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpenedContainersInput, Prisma.UserUncheckedCreateWithoutOpenedContainersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpenedContainersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutOpenedContainersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOpenedContainersInput, Prisma.UserUncheckedCreateWithoutOpenedContainersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOpenedContainersInput
+  upsert?: Prisma.UserUpsertWithoutOpenedContainersInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOpenedContainersInput, Prisma.UserUpdateWithoutOpenedContainersInput>, Prisma.UserUncheckedUpdateWithoutOpenedContainersInput>
+}
+
 export type UserCreateNestedOneWithoutCompletedCycleCountTasksInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCompletedCycleCountTasksInput, Prisma.UserUncheckedCreateWithoutCompletedCycleCountTasksInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompletedCycleCountTasksInput
@@ -578,6 +601,7 @@ export type UserCreateWithoutHomeLocationInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUncheckedCreateWithoutHomeLocationInput = {
@@ -593,6 +617,7 @@ export type UserUncheckedCreateWithoutHomeLocationInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserCreateOrConnectWithoutHomeLocationInput = {
@@ -649,6 +674,7 @@ export type UserCreateWithoutInventoryTransactionsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUncheckedCreateWithoutInventoryTransactionsInput = {
@@ -664,6 +690,7 @@ export type UserUncheckedCreateWithoutInventoryTransactionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserCreateOrConnectWithoutInventoryTransactionsInput = {
@@ -695,6 +722,7 @@ export type UserUpdateWithoutInventoryTransactionsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInventoryTransactionsInput = {
@@ -707,6 +735,87 @@ export type UserUncheckedUpdateWithoutInventoryTransactionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutCompletedByNestedInput
+  auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutOpenedByNestedInput
+}
+
+export type UserCreateWithoutOpenedContainersInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  role: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  homeLocation?: Prisma.LocationCreateNestedOneWithoutHomeUsersInput
+  inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutActorInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  completedCycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutCompletedByInput
+  auditEvents?: Prisma.AuditEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutOpenedContainersInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash?: string | null
+  role: $Enums.UserRole
+  homeLocationId?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutActorInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutCompletedByInput
+  auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutOpenedContainersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOpenedContainersInput, Prisma.UserUncheckedCreateWithoutOpenedContainersInput>
+}
+
+export type UserUpsertWithoutOpenedContainersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOpenedContainersInput, Prisma.UserUncheckedUpdateWithoutOpenedContainersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOpenedContainersInput, Prisma.UserUncheckedCreateWithoutOpenedContainersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutOpenedContainersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOpenedContainersInput, Prisma.UserUncheckedUpdateWithoutOpenedContainersInput>
+}
+
+export type UserUpdateWithoutOpenedContainersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLocation?: Prisma.LocationUpdateOneWithoutHomeUsersNestedInput
+  inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutActorNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  completedCycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutCompletedByNestedInput
+  auditEvents?: Prisma.AuditEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOpenedContainersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  homeLocationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutActorNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutActorNestedInput
@@ -725,6 +834,7 @@ export type UserCreateWithoutCompletedCycleCountTasksInput = {
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutActorInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUncheckedCreateWithoutCompletedCycleCountTasksInput = {
@@ -740,6 +850,7 @@ export type UserUncheckedCreateWithoutCompletedCycleCountTasksInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutActorInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserCreateOrConnectWithoutCompletedCycleCountTasksInput = {
@@ -771,6 +882,7 @@ export type UserUpdateWithoutCompletedCycleCountTasksInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutActorNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCompletedCycleCountTasksInput = {
@@ -786,6 +898,7 @@ export type UserUncheckedUpdateWithoutCompletedCycleCountTasksInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutActorNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -801,6 +914,7 @@ export type UserCreateWithoutAuditLogsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -816,6 +930,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutCompletedByInput
   auditEvents?: Prisma.AuditEventUncheckedCreateNestedManyWithoutActorInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -847,6 +962,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -862,6 +978,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserCreateWithoutAuditEventsInput = {
@@ -877,6 +994,7 @@ export type UserCreateWithoutAuditEventsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionCreateNestedManyWithoutActorInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskCreateNestedManyWithoutCompletedByInput
+  openedContainers?: Prisma.OpenedContainerCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditEventsInput = {
@@ -892,6 +1010,7 @@ export type UserUncheckedCreateWithoutAuditEventsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedCreateNestedManyWithoutActorInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedCreateNestedManyWithoutCompletedByInput
+  openedContainers?: Prisma.OpenedContainerUncheckedCreateNestedManyWithoutOpenedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditEventsInput = {
@@ -923,6 +1042,7 @@ export type UserUpdateWithoutAuditEventsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUpdateManyWithoutActorNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutCompletedByNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditEventsInput = {
@@ -938,6 +1058,7 @@ export type UserUncheckedUpdateWithoutAuditEventsInput = {
   inventoryTransactions?: Prisma.InventoryTransactionUncheckedUpdateManyWithoutActorNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutCompletedByNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserCreateManyHomeLocationInput = {
@@ -964,6 +1085,7 @@ export type UserUpdateWithoutHomeLocationInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHomeLocationInput = {
@@ -979,6 +1101,7 @@ export type UserUncheckedUpdateWithoutHomeLocationInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   completedCycleCountTasks?: Prisma.CycleCountTaskUncheckedUpdateManyWithoutCompletedByNestedInput
   auditEvents?: Prisma.AuditEventUncheckedUpdateManyWithoutActorNestedInput
+  openedContainers?: Prisma.OpenedContainerUncheckedUpdateManyWithoutOpenedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutHomeLocationInput = {
@@ -1002,6 +1125,7 @@ export type UserCountOutputType = {
   auditLogs: number
   completedCycleCountTasks: number
   auditEvents: number
+  openedContainers: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1009,6 +1133,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
   completedCycleCountTasks?: boolean | UserCountOutputTypeCountCompletedCycleCountTasksArgs
   auditEvents?: boolean | UserCountOutputTypeCountAuditEventsArgs
+  openedContainers?: boolean | UserCountOutputTypeCountOpenedContainersArgs
 }
 
 /**
@@ -1049,6 +1174,13 @@ export type UserCountOutputTypeCountAuditEventsArgs<ExtArgs extends runtime.Type
   where?: Prisma.AuditEventWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOpenedContainersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OpenedContainerWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1065,6 +1197,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   completedCycleCountTasks?: boolean | Prisma.User$completedCycleCountTasksArgs<ExtArgs>
   auditEvents?: boolean | Prisma.User$auditEventsArgs<ExtArgs>
+  openedContainers?: boolean | Prisma.User$openedContainersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1113,6 +1246,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   completedCycleCountTasks?: boolean | Prisma.User$completedCycleCountTasksArgs<ExtArgs>
   auditEvents?: boolean | Prisma.User$auditEventsArgs<ExtArgs>
+  openedContainers?: boolean | Prisma.User$openedContainersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1130,6 +1264,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     completedCycleCountTasks: Prisma.$CycleCountTaskPayload<ExtArgs>[]
     auditEvents: Prisma.$AuditEventPayload<ExtArgs>[]
+    openedContainers: Prisma.$OpenedContainerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1540,6 +1675,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   completedCycleCountTasks<T extends Prisma.User$completedCycleCountTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$completedCycleCountTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CycleCountTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditEvents<T extends Prisma.User$auditEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  openedContainers<T extends Prisma.User$openedContainersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$openedContainersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OpenedContainerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2091,6 +2227,30 @@ export type User$auditEventsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.AuditEventScalarFieldEnum | Prisma.AuditEventScalarFieldEnum[]
+}
+
+/**
+ * User.openedContainers
+ */
+export type User$openedContainersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OpenedContainer
+   */
+  select?: Prisma.OpenedContainerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OpenedContainer
+   */
+  omit?: Prisma.OpenedContainerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OpenedContainerInclude<ExtArgs> | null
+  where?: Prisma.OpenedContainerWhereInput
+  orderBy?: Prisma.OpenedContainerOrderByWithRelationInput | Prisma.OpenedContainerOrderByWithRelationInput[]
+  cursor?: Prisma.OpenedContainerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OpenedContainerScalarFieldEnum | Prisma.OpenedContainerScalarFieldEnum[]
 }
 
 /**

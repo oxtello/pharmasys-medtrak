@@ -56,6 +56,7 @@ export const ModelName = {
   MedicationMaster: 'MedicationMaster',
   InventoryItem: 'InventoryItem',
   InventoryTransaction: 'InventoryTransaction',
+  OpenedContainer: 'OpenedContainer',
   CycleCountTask: 'CycleCountTask',
   ReconciliationReport: 'ReconciliationReport',
   ReconciliationReportRow: 'ReconciliationReportRow',
@@ -164,6 +165,7 @@ export const InventoryTransactionScalarFieldEnum = {
   barcode: 'barcode',
   note: 'note',
   referenceId: 'referenceId',
+  containerId: 'containerId',
   previousHash: 'previousHash',
   hash: 'hash',
   chainVersion: 'chainVersion',
@@ -172,6 +174,39 @@ export const InventoryTransactionScalarFieldEnum = {
 } as const
 
 export type InventoryTransactionScalarFieldEnum = (typeof InventoryTransactionScalarFieldEnum)[keyof typeof InventoryTransactionScalarFieldEnum]
+
+
+export const OpenedContainerScalarFieldEnum = {
+  id: 'id',
+  containerId: 'containerId',
+  medicationId: 'medicationId',
+  locationId: 'locationId',
+  openedByUserId: 'openedByUserId',
+  status: 'status',
+  barcode: 'barcode',
+  medicationName: 'medicationName',
+  strength: 'strength',
+  dosageForm: 'dosageForm',
+  manufacturer: 'manufacturer',
+  ndc: 'ndc',
+  deaSchedule: 'deaSchedule',
+  openedUsePolicy: 'openedUsePolicy',
+  openedUseDays: 'openedUseDays',
+  requiresOpenedDate: 'requiresOpenedDate',
+  requiresContainerTracking: 'requiresContainerTracking',
+  lotNumber: 'lotNumber',
+  expirationDate: 'expirationDate',
+  openedDate: 'openedDate',
+  discardAfterOpenDate: 'discardAfterOpenDate',
+  initialQuantity: 'initialQuantity',
+  remainingQuantity: 'remainingQuantity',
+  inventoryUnit: 'inventoryUnit',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OpenedContainerScalarFieldEnum = (typeof OpenedContainerScalarFieldEnum)[keyof typeof OpenedContainerScalarFieldEnum]
 
 
 export const CycleCountTaskScalarFieldEnum = {

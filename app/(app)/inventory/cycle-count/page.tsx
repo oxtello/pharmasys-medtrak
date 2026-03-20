@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 type LocationOption = {
@@ -61,7 +61,7 @@ function toNumber(value: unknown) {
   return Number.isFinite(n) ? n : 0;
 }
 
-export default function CycleCountPage() {
+function CycleCountPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -91,7 +91,9 @@ export default function CycleCountPage() {
         const urlLocationId = searchParams.get("locationId") || "";
         if (
           urlLocationId &&
-          nextLocations.some((location) => location.id === urlLocationId)
+          nextLocations.some(
+            (location: LocationOption) => location.id === urlLocationId
+          )
         ) {
           setLocationId(urlLocationId);
         } else if (nextLocations.length > 0) {
@@ -244,13 +246,13 @@ export default function CycleCountPage() {
             headers: {
               "Content-Type": "application/json",
             },
-body: JSON.stringify({
-  countedBy: countedBy.trim(),
-  expectedQuantity: toNumber(lookup.onHand),
-  actualQuantity: toNumber(actualCount),
-  variance: Number(variance),
-  notes: comment.trim(),
-}),
+            body: JSON.stringify({
+              countedBy: countedBy.trim(),
+              expectedQuantity: toNumber(lookup.onHand),
+              actualQuantity: toNumber(actualCount),
+              variance: Number(variance),
+              notes: comment.trim(),
+            }),
           }
         );
 
@@ -268,7 +270,7 @@ body: JSON.stringify({
           : "Cycle count saved."
       );
 
-router.push("/reports/diversion-control/variance-review");
+      router.push("/reports/diversion-control/variance-review");
     } catch (error) {
       console.error("Save failed", error);
       setErrorMessage(
@@ -532,5 +534,24 @@ router.push("/reports/diversion-control/variance-review");
         </form>
       </div>
     </div>
+  );
+}
+
+export default function CycleCountPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="space-y-8">
+          <div>
+            <h1 className="text-3xl font-semibold text-slate-900">
+              Cycle Count / Reconciliation
+            </h1>
+            <p className="mt-2 max-w-3xl text-slate-600">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <CycleCountPageContent />
+    </Suspense>
   );
 }

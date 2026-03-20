@@ -1,0 +1,109 @@
+export type UserRole =
+  | "ADMIN"
+  | "PHARMACIST"
+  | "MEDICAL_ASSISTANT"
+  | "LICENSED_VOCATIONAL_NURSE"
+  | "TECHNICIAN"
+  | "REGISTERED_NURSE"
+  | "PROVIDER"
+  | "AUDITOR"
+  | "NURSE";
+
+export type RolePermissions = {
+  canReceive: boolean;
+  canDispense: boolean;
+  canTransfer: boolean;
+  canWaste: boolean;
+  canDispose: boolean;
+  canCycleCount: boolean;
+  canViewReports: boolean;
+  canManageUsers: boolean;
+  canAddMedication: boolean;
+};
+
+const FULL_ACCESS_PERMISSIONS: RolePermissions = {
+  canReceive: true,
+  canDispense: true,
+  canTransfer: true,
+  canWaste: true,
+  canDispose: true,
+  canCycleCount: true,
+  canViewReports: true,
+  canManageUsers: false,
+  canAddMedication: true,
+};
+
+export function getRolePermissions(role?: string | null): RolePermissions {
+  const normalizedRole = String(role ?? "").trim().toUpperCase() as UserRole | "";
+
+  if (normalizedRole === "ADMIN") {
+    return {
+      ...FULL_ACCESS_PERMISSIONS,
+      canManageUsers: true,
+    };
+  }
+
+  if (
+    normalizedRole === "PHARMACIST" ||
+    normalizedRole === "MEDICAL_ASSISTANT" ||
+    normalizedRole === "LICENSED_VOCATIONAL_NURSE" ||
+    normalizedRole === "TECHNICIAN" ||
+    normalizedRole === "REGISTERED_NURSE" ||
+    normalizedRole === "PROVIDER" ||
+    normalizedRole === "AUDITOR" ||
+    normalizedRole === "NURSE"
+  ) {
+    return {
+      ...FULL_ACCESS_PERMISSIONS,
+      canManageUsers: false,
+    };
+  }
+
+  return {
+    canReceive: false,
+    canDispense: false,
+    canTransfer: false,
+    canWaste: false,
+    canDispose: false,
+    canCycleCount: false,
+    canViewReports: false,
+    canManageUsers: false,
+    canAddMedication: false,
+  };
+}
+
+export function canManageUsers(role?: string | null) {
+  return getRolePermissions(role).canManageUsers;
+}
+
+export function canReceive(role?: string | null) {
+  return getRolePermissions(role).canReceive;
+}
+
+export function canDispense(role?: string | null) {
+  return getRolePermissions(role).canDispense;
+}
+
+export function canTransfer(role?: string | null) {
+  return getRolePermissions(role).canTransfer;
+}
+
+export function canWaste(role?: string | null) {
+  return getRolePermissions(role).canWaste;
+}
+
+export function canDispose(role?: string | null) {
+  return getRolePermissions(role).canDispose;
+}
+
+export function canCycleCount(role?: string | null) {
+  return getRolePermissions(role).canCycleCount;
+}
+
+export function canViewReports(role?: string | null) {
+  return getRolePermissions(role).canViewReports;
+}
+
+export function canAddMedication(role?: string | null) {
+  return getRolePermissions(role).canAddMedication;
+}

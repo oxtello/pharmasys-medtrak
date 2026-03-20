@@ -1,4 +1,13 @@
-import type { UserRole } from "@/lib/mock-session";
+export type UserRole =
+  | "ADMIN"
+  | "PHARMACIST"
+  | "MEDICAL_ASSISTANT"
+  | "LICENSED_VOCATIONAL_NURSE"
+  | "TECHNICIAN"
+  | "REGISTERED_NURSE"
+  | "PROVIDER"
+  | "AUDITOR"
+  | "NURSE";
 
 export type RolePermissions = {
   canReceive: boolean;
@@ -9,33 +18,68 @@ export type RolePermissions = {
 };
 
 export const ROLE_PERMISSIONS: Record<UserRole, RolePermissions> = {
-  Nurse: {
-    canReceive: true,
-    canDispense: true,
-    canAdjust: true,
-    canDispose: true,
-    canManageUsers: false,
-  },
-  MA: {
-    canReceive: true,
-    canDispense: false,
-    canAdjust: false,
-    canDispose: false,
-    canManageUsers: false,
-  },
-  Provider: {
-    canReceive: false,
-    canDispense: true,
-    canAdjust: false,
-    canDispose: false,
-    canManageUsers: false,
-  },
-  Admin: {
+  ADMIN: {
     canReceive: true,
     canDispense: true,
     canAdjust: true,
     canDispose: true,
     canManageUsers: true,
+  },
+  PHARMACIST: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  MEDICAL_ASSISTANT: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  LICENSED_VOCATIONAL_NURSE: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  TECHNICIAN: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  REGISTERED_NURSE: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  PROVIDER: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  AUDITOR: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
+  },
+  NURSE: {
+    canReceive: true,
+    canDispense: true,
+    canAdjust: true,
+    canDispose: true,
+    canManageUsers: false,
   },
 };
 

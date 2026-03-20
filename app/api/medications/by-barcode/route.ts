@@ -24,7 +24,33 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ medication });
+    const isMultiDose = Boolean(medication.isMultiDose);
+    const openedUsePolicy =
+      medication.openedUsePolicy ||
+      (isMultiDose ? "DAYS_AFTER_OPEN" : "SINGLE_USE");
+    const openedUseDays =
+      openedUsePolicy === "DAYS_AFTER_OPEN"
+        ? medication.openedUseDays ?? 28
+        : null;
+    const requiresOpenedDate =
+      openedUsePolicy === "DAYS_AFTER_OPEN"
+        ? medication.requiresOpenedDate ?? true
+        : false;
+    const requiresContainerTracking =
+      openedUsePolicy === "DAYS_AFTER_OPEN" ? true : false;
+
+    return NextResponse.json({
+      medication: {
+        ...medication,
+        medicationName: medication.name,
+        isMultidose: isMultiDose,
+        isMultiDose,
+        openedUsePolicy,
+        openedUseDays,
+        requiresOpenedDate,
+        requiresContainerTracking,
+      },
+    });
   } catch (error) {
     console.error("Barcode lookup error:", error);
     return NextResponse.json(

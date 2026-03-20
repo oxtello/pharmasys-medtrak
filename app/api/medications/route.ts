@@ -1,12 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+const ALLOWED_INVENTORY_UNITS = [
+  "EACH",
+  "ML",
+  "TABLET",
+  "CAPSULE",
+  "VIAL",
+  "AMPULE",
+  "TUBE",
+  "BOTTLE",
+  "PATCH",
+  "SYRINGE",
+  "KIT",
+  "GRAM",
+] as const;
+
+type InventoryUnitValue = (typeof ALLOWED_INVENTORY_UNITS)[number];
+
 function cleanString(value: unknown) {
-  if (typeof value !== "string") return null;
-  const trimmed = value.trim();
-  return trimmed.length ? trimmed : null;
+  if (typeof value !== "string") return "";
+  return value.trim();
 }
 
 function cleanBoolean(value: unknown, fallback = false) {
@@ -25,18 +41,23 @@ function cleanOptionalNumber(value: unknown) {
   return Number.isFinite(parsed) ? parsed : NaN;
 }
 
+function normalizeInventoryUnit(value: unknown): InventoryUnitValue {
+  if (typeof value !== "string") return "EACH";
+  const normalized = value.trim().toUpperCase() as InventoryUnitValue;
+  return ALLOWED_INVENTORY_UNITS.includes(normalized) ? normalized : "EACH";
+}
+
 export async function GET() {
   try {
     const medications = await prisma.medicationMaster.findMany({
-      where: { isActive: true },
-      orderBy: [{ name: "asc" }, { createdAt: "desc" }],
+      orderBy: [{ name: "asc" }, { strength: "asc" }],
     });
 
     return NextResponse.json({ medications });
   } catch (error) {
-    console.error("GET /api/medications error:", error);
+    console.error("Failed to load medications", error);
     return NextResponse.json(
-      { error: "Failed to fetch medications" },
+      { error: "Failed to load medications" },
       { status: 500 }
     );
   }
@@ -50,7 +71,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = await prisma.user.findUnique({
+    const actor = await prisma.user.findUnique({
       where: { email: session.user.email },
       select: {
         id: true,
@@ -59,79 +80,71 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (!user || !user.isActive) {
-      return NextResponse.json({ error: "Inactive user" }, { status: 403 });
+    if (!actor || !actor.isActive) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
 
-    const name = cleanString(body.name);
-    const genericName = cleanString(body.genericName);
-    const strength = cleanString(body.strength);
-    const dosageForm = cleanString(body.dosageForm);
-    const manufacturer = cleanString(body.manufacturer);
-    const ndc = cleanString(body.ndc);
-    const barcode = cleanString(body.barcode);
-    const deaSchedule = cleanString(body.deaSchedule);
-    const inventoryUnit = cleanString(body.inventoryUnit) || "EACH";
-    const openedUsePolicy = cleanString(body.openedUsePolicy);
-    const notes = cleanString(body.notes);
+    const name = cleanString(body?.name);
+    const genericName = cleanString(body?.genericName);
+    const strength = cleanString(body?.strength);
+    const dosageForm = cleanString(body?.dosageForm);
+    const manufacturer = cleanString(body?.manufacturer);
+    const ndc = cleanString(body?.ndc);
+    const barcode = cleanString(body?.barcode);
+    const deaSchedule = cleanString(body?.deaSchedule);
+    const inventoryUnit = normalizeInventoryUnit(body?.inventoryUnit);
+    const isControlled = cleanBoolean(body?.isControlled, false);
+    const isActive = cleanBoolean(body?.isActive, true);
+    const isMultiDose = cleanBoolean(body?.isMultiDose, false);
+    const openedUsePolicy = cleanString(body?.openedUsePolicy);
+    const openedUseDays = cleanOptionalNumber(body?.openedUseDays);
+    const requiresOpenedDate = cleanBoolean(body?.requiresOpenedDate, false);
+    const requiresWitnessWaste = cleanBoolean(
+      body?.requiresWitnessWaste,
+      false
+    );
+    const notes = cleanString(body?.notes);
 
-    const isMultiDose = cleanBoolean(body.isMultiDose);
-    const requiresOpenedDate = cleanBoolean(body.requiresOpenedDate);
-    const isActive =
-      body.isActive === undefined ? true : cleanBoolean(body.isActive, true);
+    if (!name) {
+      return NextResponse.json(
+        { error: "Medication name is required" },
+        { status: 400 }
+      );
+    }
 
-    const openedUseDays = cleanOptionalNumber(body.openedUseDays);
-    if (Number.isNaN(openedUseDays)) {
+    if (openedUseDays !== null && Number.isNaN(openedUseDays)) {
       return NextResponse.json(
         { error: "Opened use days must be a valid number" },
         { status: 400 }
       );
     }
 
-    if (!name || !barcode) {
-      return NextResponse.json(
-        { error: "Medication name and barcode are required" },
-        { status: 400 }
-      );
+    if (barcode) {
+      const existingBarcode = await prisma.medicationMaster.findFirst({
+        where: { barcode },
+        select: { id: true, name: true },
+      });
+
+      if (existingBarcode) {
+        return NextResponse.json(
+          { error: "A medication with that barcode already exists" },
+          { status: 409 }
+        );
+      }
     }
 
-    const normalizedDeaSchedule = deaSchedule?.toUpperCase() || null;
-    const normalizedBarcode = barcode;
-    const normalizedNdc = ndc;
-    const derivedIsControlled = Boolean(normalizedDeaSchedule);
-    const requiresWitnessWaste =
-      normalizedDeaSchedule !== null
-        ? true
-        : cleanBoolean(body.requiresWitnessWaste);
-    const isControlled =
-      body.isControlled === undefined
-        ? derivedIsControlled
-        : cleanBoolean(body.isControlled, derivedIsControlled);
-
-    const existingMedication = await prisma.medicationMaster.findUnique({
-      where: { barcode: normalizedBarcode },
-      select: { id: true },
-    });
-
-    if (existingMedication) {
-      return NextResponse.json(
-        { error: "A medication with this barcode already exists" },
-        { status: 409 }
-      );
-    }
-
-    const medication = await prisma.medicationMaster.create({
+    const createdMedication = await prisma.medicationMaster.create({
       data: {
         name,
         genericName,
         strength,
         dosageForm,
         manufacturer,
-        ndc: normalizedNdc,
-        barcode: normalizedBarcode,
-        deaSchedule: normalizedDeaSchedule,
+        ndc,
+        barcode,
+        deaSchedule,
         inventoryUnit,
         isControlled,
         isActive,
@@ -144,13 +157,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ medication }, { status: 201 });
+    return NextResponse.json({ medication: createdMedication }, { status: 201 });
   } catch (error) {
-    console.error("POST /api/medications error:", error);
+    console.error("Failed to create medication", error);
     return NextResponse.json(
       { error: "Failed to create medication" },
       { status: 500 }
     );
   }
 }
-

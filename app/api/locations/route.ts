@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     const location = await prisma.location.create({
       data: {
         name,
-        code: code || null,
+	code: code || "",
         isActive: true,
       },
       select: {

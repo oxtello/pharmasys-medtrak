@@ -250,7 +250,7 @@ export function createOpenedContainer(input: OpenContainerInput) {
 export function openContainerAndPrintLabel(input: OpenContainerInput) {
   const result = createOpenedContainer(input);
 
-  const zpl = buildVialLabelZpl({
+  const labelInput = {
     containerId: result.record.containerId,
     medicationName: result.record.medicationName,
     strength: result.record.strength,
@@ -258,9 +258,11 @@ export function openContainerAndPrintLabel(input: OpenContainerInput) {
       result.record.discardAfterOpenDate ||
       result.record.expirationDate ||
       result.record.openedDate,
-  });
+  };
 
-  downloadZplFile(buildVialLabelFilename(result.record.containerId), zpl);
+  const zpl = buildVialLabelZpl(labelInput);
+
+  downloadZplFile(buildVialLabelFilename(labelInput), zpl);
 
   return result;
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { findMedicationByBarcode } from "@/lib/shared-medication-catalog";
 
 type MedicationMatch = {
+  id: string;
   barcode: string;
   medicationName: string;
   strength?: string;
@@ -13,6 +13,7 @@ type MedicationMatch = {
   ndc?: string;
   deaSchedule?: string;
   inventoryUnit?: string;
+  isActive?: boolean;
 };
 
 type LocationOption = {
@@ -34,29 +35,14 @@ export default function ReceivePage() {
   const [locations, setLocations] = useState<LocationOption[]>([]);
   const [isLoadingLocations, setIsLoadingLocations] = useState(true);
 
+  const [matchedMedication, setMatchedMedication] = useState<
+    MedicationMatch | undefined
+  >(undefined);
+  const [isLookingUpMedication, setIsLookingUpMedication] = useState(false);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
-  const matchedMedication = useMemo<MedicationMatch | undefined>(() => {
-    if (!barcode.trim()) return undefined;
-    const result = findMedicationByBarcode(barcode.trim());
-    if (!result) return undefined;
-
-    return {
-      barcode: result.barcode,
-      medicationName:
-        (result as any).medicationName ||
-        (result as any).name ||
-        "Unknown medication",
-      strength: (result as any).strength || "",
-      dosageForm: (result as any).dosageForm || "",
-      manufacturer: (result as any).manufacturer || "",
-      ndc: (result as any).ndc || "",
-      deaSchedule: (result as any).deaSchedule || "",
-      inventoryUnit: (result as any).inventoryUnit || "",
-    };
-  }, [barcode]);
 
   useEffect(() => {
     let isMounted = true;
@@ -105,6 +91,75 @@ export default function ReceivePage() {
       isMounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function lookupMedication() {
+      const trimmedBarcode = barcode.trim();
+
+      if (!trimmedBarcode) {
+        setMatchedMedication(undefined);
+        return;
+      }
+
+      try {
+        setIsLookingUpMedication(true);
+
+        const response = await fetch(
+          `/api/medications/by-barcode?barcode=${encodeURIComponent(
+            trimmedBarcode
+          )}`,
+          {
+            cache: "no-store",
+          }
+        );
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!isMounted) return;
+
+        if (!response.ok) {
+          setMatchedMedication(undefined);
+          return;
+        }
+
+        const medication = data?.medication;
+
+        if (!medication) {
+          setMatchedMedication(undefined);
+          return;
+        }
+
+        setMatchedMedication({
+          id: medication.id,
+          barcode: medication.barcode || trimmedBarcode,
+          medicationName: medication.name || "Unknown medication",
+          strength: medication.strength || "",
+          dosageForm: medication.dosageForm || "",
+          manufacturer: medication.manufacturer || "",
+          ndc: medication.ndc || "",
+          deaSchedule: medication.deaSchedule || "",
+          inventoryUnit: medication.inventoryUnit || "",
+          isActive: medication.isActive,
+        });
+      } catch (error) {
+        console.error(error);
+        if (!isMounted) return;
+        setMatchedMedication(undefined);
+      } finally {
+        if (isMounted) {
+          setIsLookingUpMedication(false);
+        }
+      }
+    }
+
+    lookupMedication();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [barcode]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -158,6 +213,7 @@ export default function ReceivePage() {
       setExpirationDate("");
       setQuantity("");
       setNote("");
+      setMatchedMedication(undefined);
 
       setTimeout(() => {
         router.push("/inventory");
@@ -184,6 +240,10 @@ export default function ReceivePage() {
             Scan a medication barcode, confirm lot and expiration details, and
             save the receipt directly to the database ledger.
           </p>
+          <p className="mt-2 text-sm text-amber-700">
+            Medication must exist in the live medication master before it can be
+            received.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -203,6 +263,11 @@ export default function ReceivePage() {
                 className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                 autoFocus
               />
+              {isLookingUpMedication ? (
+                <p className="mt-2 text-xs text-slate-500">
+                  Looking up medication...
+                </p>
+              ) : null}
             </div>
 
             <ReadOnlyField
@@ -341,7 +406,7 @@ export default function ReceivePage() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="submit"
-              disabled={isSubmitting || isLoadingLocations}
+              disabled={isSubmitting || isLoadingLocations || isLookingUpMedication}
               className="rounded-2xl bg-blue-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
             >
               {isSubmitting ? "Saving..." : "Save Receive Record"}

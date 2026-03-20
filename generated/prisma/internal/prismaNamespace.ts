@@ -389,6 +389,7 @@ export const ModelName = {
   MedicationMaster: 'MedicationMaster',
   InventoryItem: 'InventoryItem',
   InventoryTransaction: 'InventoryTransaction',
+  OpenedContainer: 'OpenedContainer',
   CycleCountTask: 'CycleCountTask',
   ReconciliationReport: 'ReconciliationReport',
   ReconciliationReportRow: 'ReconciliationReportRow',
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "location" | "medicationMaster" | "inventoryItem" | "inventoryTransaction" | "cycleCountTask" | "reconciliationReport" | "reconciliationReportRow" | "auditLog" | "auditEvent"
+    modelProps: "user" | "location" | "medicationMaster" | "inventoryItem" | "inventoryTransaction" | "openedContainer" | "cycleCountTask" | "reconciliationReport" | "reconciliationReportRow" | "auditLog" | "auditEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -780,6 +781,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.InventoryTransactionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.InventoryTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    OpenedContainer: {
+      payload: Prisma.$OpenedContainerPayload<ExtArgs>
+      fields: Prisma.OpenedContainerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OpenedContainerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OpenedContainerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>
+        }
+        findFirst: {
+          args: Prisma.OpenedContainerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OpenedContainerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>
+        }
+        findMany: {
+          args: Prisma.OpenedContainerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>[]
+        }
+        create: {
+          args: Prisma.OpenedContainerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>
+        }
+        createMany: {
+          args: Prisma.OpenedContainerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.OpenedContainerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>[]
+        }
+        delete: {
+          args: Prisma.OpenedContainerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>
+        }
+        update: {
+          args: Prisma.OpenedContainerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>
+        }
+        deleteMany: {
+          args: Prisma.OpenedContainerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OpenedContainerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.OpenedContainerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>[]
+        }
+        upsert: {
+          args: Prisma.OpenedContainerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OpenedContainerPayload>
+        }
+        aggregate: {
+          args: Prisma.OpenedContainerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOpenedContainer>
+        }
+        groupBy: {
+          args: Prisma.OpenedContainerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OpenedContainerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.OpenedContainerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OpenedContainerCountAggregateOutputType> | number
         }
       }
     }
@@ -1277,6 +1352,7 @@ export const InventoryTransactionScalarFieldEnum = {
   barcode: 'barcode',
   note: 'note',
   referenceId: 'referenceId',
+  containerId: 'containerId',
   previousHash: 'previousHash',
   hash: 'hash',
   chainVersion: 'chainVersion',
@@ -1285,6 +1361,39 @@ export const InventoryTransactionScalarFieldEnum = {
 } as const
 
 export type InventoryTransactionScalarFieldEnum = (typeof InventoryTransactionScalarFieldEnum)[keyof typeof InventoryTransactionScalarFieldEnum]
+
+
+export const OpenedContainerScalarFieldEnum = {
+  id: 'id',
+  containerId: 'containerId',
+  medicationId: 'medicationId',
+  locationId: 'locationId',
+  openedByUserId: 'openedByUserId',
+  status: 'status',
+  barcode: 'barcode',
+  medicationName: 'medicationName',
+  strength: 'strength',
+  dosageForm: 'dosageForm',
+  manufacturer: 'manufacturer',
+  ndc: 'ndc',
+  deaSchedule: 'deaSchedule',
+  openedUsePolicy: 'openedUsePolicy',
+  openedUseDays: 'openedUseDays',
+  requiresOpenedDate: 'requiresOpenedDate',
+  requiresContainerTracking: 'requiresContainerTracking',
+  lotNumber: 'lotNumber',
+  expirationDate: 'expirationDate',
+  openedDate: 'openedDate',
+  discardAfterOpenDate: 'discardAfterOpenDate',
+  initialQuantity: 'initialQuantity',
+  remainingQuantity: 'remainingQuantity',
+  inventoryUnit: 'inventoryUnit',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OpenedContainerScalarFieldEnum = (typeof OpenedContainerScalarFieldEnum)[keyof typeof OpenedContainerScalarFieldEnum]
 
 
 export const CycleCountTaskScalarFieldEnum = {
@@ -1638,6 +1747,7 @@ export type GlobalOmitConfig = {
   medicationMaster?: Prisma.MedicationMasterOmit
   inventoryItem?: Prisma.InventoryItemOmit
   inventoryTransaction?: Prisma.InventoryTransactionOmit
+  openedContainer?: Prisma.OpenedContainerOmit
   cycleCountTask?: Prisma.CycleCountTaskOmit
   reconciliationReport?: Prisma.ReconciliationReportOmit
   reconciliationReportRow?: Prisma.ReconciliationReportRowOmit

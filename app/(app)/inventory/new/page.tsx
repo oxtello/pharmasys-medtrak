@@ -5,23 +5,102 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type DeaSchedule = "NONE" | "C2" | "C3" | "C4" | "C5";
-
-type MedicationRecord = {
-  barcode: string;
-  medicationName: string;
-  strength: string;
-  dosageForm: string;
-  manufacturer: string;
-  ndc: string;
-  category: string;
-  reorderThreshold: string;
-  notes: string;
-  deaSchedule: DeaSchedule;
-  isControlled: boolean;
-  createdAt: string;
-};
+type InventoryUnit =
+  | "EACH"
+  | "ML"
+  | "TABLET"
+  | "CAPSULE"
+  | "VIAL"
+  | "AMPULE"
+  | "TUBE"
+  | "BOTTLE"
+  | "PATCH"
+  | "SYRINGE"
+  | "KIT"
+  | "GRAM";
 
 const DEA_SCHEDULE_OPTIONS: DeaSchedule[] = ["NONE", "C2", "C3", "C4", "C5"];
+
+const INVENTORY_UNIT_OPTIONS: InventoryUnit[] = [
+  "EACH",
+  "ML",
+  "TABLET",
+  "CAPSULE",
+  "VIAL",
+  "AMPULE",
+  "TUBE",
+  "BOTTLE",
+  "PATCH",
+  "SYRINGE",
+  "KIT",
+  "GRAM",
+];
+
+function inferInventoryUnit(dosageForm: string): InventoryUnit {
+  const normalized = dosageForm.trim().toLowerCase();
+
+  if (
+    normalized.includes("injection") ||
+    normalized.includes("solution") ||
+    normalized.includes("liquid") ||
+    normalized.includes("ophthalmic") ||
+    normalized.includes("drops")
+  ) {
+    return "ML";
+  }
+
+  if (normalized.includes("tablet")) return "TABLET";
+  if (normalized.includes("capsule")) return "CAPSULE";
+  if (normalized.includes("vial")) return "VIAL";
+  if (normalized.includes("ampule") || normalized.includes("ampoule")) return "AMPULE";
+  if (normalized.includes("tube") || normalized.includes("cream") || normalized.includes("ointment") || normalized.includes("gel")) {
+    return "TUBE";
+  }
+  if (normalized.includes("bottle")) return "BOTTLE";
+  if (normalized.includes("patch")) return "PATCH";
+  if (normalized.includes("syringe")) return "SYRINGE";
+  if (normalized.includes("kit")) return "KIT";
+  if (normalized.includes("powder")) return "GRAM";
+
+  return "EACH";
+}
+
+function inferMultiDose(category: string, dosageForm: string) {
+  const categoryNormalized = category.trim().toLowerCase();
+  const dosageFormNormalized = dosageForm.trim().toLowerCase();
+
+  if (
+    categoryNormalized.includes("controlled") ||
+    dosageFormNormalized.includes("vial") ||
+    dosageFormNormalized.includes("drops") ||
+    dosageFormNormalized.includes("cream") ||
+    dosageFormNormalized.includes("ointment") ||
+    dosageFormNormalized.includes("gel") ||
+    dosageFormNormalized.includes("bottle")
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function inferOpenedUsePolicy(isMultiDose: boolean, dosageForm: string) {
+  if (!isMultiDose) return "SINGLE_USE";
+
+  const normalized = dosageForm.trim().toLowerCase();
+
+  if (
+    normalized.includes("drops") ||
+    normalized.includes("cream") ||
+    normalized.includes("ointment") ||
+    normalized.includes("gel") ||
+    normalized.includes("powder")
+  ) {
+    return "UNTIL_MANUFACTURER_EXP";
+  }
+
+  return "DAYS_AFTER_OPEN";
+}
 
 export default function NewMedicationPage() {
   const router = useRouter();
@@ -33,61 +112,72 @@ export default function NewMedicationPage() {
   const [manufacturer, setManufacturer] = useState("");
   const [ndc, setNdc] = useState("");
   const [category, setCategory] = useState("");
-  const [reorderThreshold, setReorderThreshold] = useState("");
   const [notes, setNotes] = useState("");
   const [deaSchedule, setDeaSchedule] = useState<DeaSchedule>("NONE");
+  const [inventoryUnit, setInventoryUnit] = useState<InventoryUnit>("EACH");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!barcode || !medicationName || !strength || !dosageForm) {
+    if (!barcode.trim() || !medicationName.trim() || !strength.trim() || !dosageForm.trim()) {
       setErrorMessage(
         "Please complete barcode, medication name, strength, and dosage form."
       );
       return;
     }
 
-    const trimmedBarcode = barcode.trim();
-
-    if (!trimmedBarcode) {
-      setErrorMessage("Barcode is required.");
-      return;
-    }
-
-    const existing: MedicationRecord[] = JSON.parse(
-      localStorage.getItem("medtrak-medications") || "[]"
-    );
-
-    const duplicateBarcode = existing.some(
-      (item) => item.barcode.trim() === trimmedBarcode
-    );
-
-    if (duplicateBarcode) {
-      setErrorMessage("A medication with this barcode already exists.");
-      return;
-    }
-
-    const medicationRecord: MedicationRecord = {
-      barcode: trimmedBarcode,
-      medicationName: medicationName.trim(),
-      strength: strength.trim(),
-      dosageForm: dosageForm.trim(),
-      manufacturer: manufacturer.trim(),
-      ndc: ndc.trim(),
-      category: category.trim(),
-      reorderThreshold: reorderThreshold.trim(),
-      notes: notes.trim(),
-      deaSchedule,
-      isControlled: deaSchedule !== "NONE",
-      createdAt: new Date().toISOString(),
-    };
-
-    const updated = [medicationRecord, ...existing];
-    localStorage.setItem("medtrak-medications", JSON.stringify(updated));
-
+    setIsSubmitting(true);
     setErrorMessage("");
-    router.push("/inventory");
+
+    try {
+      const trimmedCategory = category.trim();
+      const inferredIsMultiDose = inferMultiDose(trimmedCategory, dosageForm);
+      const openedUsePolicy = inferOpenedUsePolicy(inferredIsMultiDose, dosageForm);
+
+      const response = await fetch("/api/medications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: medicationName.trim(),
+          genericName: "",
+          strength: strength.trim(),
+          dosageForm: dosageForm.trim(),
+          manufacturer: manufacturer.trim(),
+          ndc: ndc.trim(),
+          barcode: barcode.trim(),
+          deaSchedule: deaSchedule === "NONE" ? "" : deaSchedule,
+          inventoryUnit,
+          isControlled: deaSchedule !== "NONE",
+          isActive: true,
+          isMultiDose: inferredIsMultiDose,
+          openedUsePolicy,
+          openedUseDays: openedUsePolicy === "DAYS_AFTER_OPEN" ? 28 : null,
+          requiresOpenedDate: openedUsePolicy === "DAYS_AFTER_OPEN",
+          requiresWitnessWaste: deaSchedule !== "NONE",
+          notes: notes.trim() || trimmedCategory || "",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.error || "Failed to save medication.");
+      }
+
+      router.push("/admin/medications");
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to save medication."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -97,18 +187,18 @@ export default function NewMedicationPage() {
           Add Medication
         </h1>
         <p className="mt-2 text-slate-600">
-          Create a new medication record for inventory tracking, receiving, and
-          controlled medication reconciliation.
+          Create a medication in the live medication master so it is available to
+          inventory workflows, barcode lookup, and dispensing.
         </p>
       </div>
 
       <div className="max-w-4xl rounded-xl border bg-white p-8 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {errorMessage && (
+          {errorMessage ? (
             <div className="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
               {errorMessage}
             </div>
-          )}
+          ) : null}
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
@@ -157,7 +247,11 @@ export default function NewMedicationPage() {
               <input
                 type="text"
                 value={dosageForm}
-                onChange={(e) => setDosageForm(e.target.value)}
+                onChange={(e) => {
+                  const nextValue = e.target.value;
+                  setDosageForm(nextValue);
+                  setInventoryUnit(inferInventoryUnit(nextValue));
+                }}
                 placeholder="Injection"
                 className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"
               />
@@ -215,9 +309,7 @@ export default function NewMedicationPage() {
               </label>
               <select
                 value={deaSchedule}
-                onChange={(e) =>
-                  setDeaSchedule(e.target.value as DeaSchedule)
-                }
+                onChange={(e) => setDeaSchedule(e.target.value as DeaSchedule)}
                 className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"
               >
                 {DEA_SCHEDULE_OPTIONS.map((option) => (
@@ -233,15 +325,19 @@ export default function NewMedicationPage() {
 
             <div>
               <label className="block text-sm font-medium text-slate-700">
-                Reorder Threshold
+                Inventory Unit
               </label>
-              <input
-                type="number"
-                value={reorderThreshold}
-                onChange={(e) => setReorderThreshold(e.target.value)}
-                placeholder="10"
+              <select
+                value={inventoryUnit}
+                onChange={(e) => setInventoryUnit(e.target.value as InventoryUnit)}
                 className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"
-              />
+              >
+                {INVENTORY_UNIT_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -279,9 +375,10 @@ export default function NewMedicationPage() {
 
             <button
               type="submit"
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              disabled={isSubmitting}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Save Medication
+              {isSubmitting ? "Saving..." : "Save Medication"}
             </button>
           </div>
         </form>

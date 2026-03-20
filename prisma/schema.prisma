@@ -61,6 +61,7 @@ model User {
   auditLogs                AuditLog[]             @relation("AuditActor")
   completedCycleCountTasks CycleCountTask[]       @relation("CycleCountTaskCompletedBy")
   auditEvents              AuditEvent[]           @relation("AuditEventActor")
+  openedContainers         OpenedContainer[]
 
   @@index([homeLocationId])
 }
@@ -79,6 +80,7 @@ model Location {
   reconciliationReports ReconciliationReport[]
   auditEvents           AuditEvent[]
   homeUsers             User[]                 @relation("UserHomeLocation")
+  openedContainers      OpenedContainer[]
 }
 
 model MedicationMaster {
@@ -107,6 +109,7 @@ model MedicationMaster {
   inventoryTransactions InventoryTransaction[]
   cycleCountTasks       CycleCountTask[]
   auditEvents           AuditEvent[]
+  openedContainers      OpenedContainer[]
 }
 
 model InventoryItem {
@@ -143,6 +146,7 @@ model InventoryTransaction {
   barcode        String?
   note           String?
   referenceId    String?
+  containerId    String?
 
   previousHash String?
   hash         String? @unique
@@ -159,6 +163,51 @@ model InventoryTransaction {
   @@index([actorUserId, occurredAt])
   @@index([occurredAt])
   @@index([previousHash])
+  @@index([containerId, occurredAt])
+}
+
+model OpenedContainer {
+  id             String  @id @default(cuid())
+  containerId    String  @unique
+  medicationId   String
+  locationId     String
+  openedByUserId String?
+  status         String  @default("ACTIVE")
+
+  barcode        String
+  medicationName String
+  strength       String?
+  dosageForm     String?
+  manufacturer   String?
+  ndc            String?
+  deaSchedule    String?
+
+  openedUsePolicy           String?
+  openedUseDays             Int?
+  requiresOpenedDate        Boolean @default(false)
+  requiresContainerTracking Boolean @default(false)
+
+  lotNumber            String?
+  expirationDate       DateTime?
+  openedDate           DateTime
+  discardAfterOpenDate DateTime?
+
+  initialQuantity   Decimal       @db.Decimal(12, 3)
+  remainingQuantity Decimal       @db.Decimal(12, 3)
+  inventoryUnit     InventoryUnit @default(ML)
+
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  medication MedicationMaster @relation(fields: [medicationId], references: [id], onDelete: Cascade)
+  location   Location         @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  openedBy   User?            @relation(fields: [openedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([barcode, locationId, status])
+  @@index([medicationId, locationId, status])
+  @@index([openedDate])
+  @@index([discardAfterOpenDate])
 }
 
 model CycleCountTask {

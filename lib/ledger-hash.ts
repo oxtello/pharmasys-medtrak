@@ -1,5 +1,8 @@
 import crypto from "crypto";
-import type { InventoryTransaction, Prisma } from "@/generated/prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
+
+type LedgerClient = Prisma.TransactionClient | typeof prisma;
 
 type LedgerHashInput = {
   id: string;
@@ -26,7 +29,9 @@ function normalizeValue(value: unknown): string {
   return String(value);
 }
 
-export function buildInventoryTransactionHash(input: LedgerHashInput): string {
+export function buildInventoryTransactionHash(
+  input: LedgerHashInput
+): string {
   const payload = [
     normalizeValue(input.id),
     normalizeValue(input.type),
@@ -50,13 +55,9 @@ export function buildInventoryTransactionHash(input: LedgerHashInput): string {
 }
 
 export async function getPreviousInventoryTransactionHash(
-  prismaLike: {
-    inventoryTransaction: {
-      findFirst: (args: unknown) => Promise<Pick<InventoryTransaction, "hash"> | null>;
-    };
-  }
+  db: LedgerClient = prisma
 ): Promise<string | null> {
-  const previous = await prismaLike.inventoryTransaction.findFirst({
+  const previous = await db.inventoryTransaction.findFirst({
     orderBy: [{ occurredAt: "desc" }, { createdAt: "desc" }, { id: "desc" }],
     select: {
       hash: true,
