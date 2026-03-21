@@ -209,7 +209,12 @@ export async function POST(req: NextRequest) {
     console.error("POST /api/inventory/receive error:", error);
 
     return NextResponse.json(
-      { error: "Receive transaction failed" },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Receive transaction failed",
+      },
       { status: 500 }
     );
   }
